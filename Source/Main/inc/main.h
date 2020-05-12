@@ -17,23 +17,10 @@
 
 //#include "USART_driver.h"
 //#include "CAN_driver.h"
-#include "motion_tl.h"
+//#include "motion_tl.h"
 #include "relay.h"
 
-#include "MPU-9250_acc_gyro_mag_driver_hl.h"
 #include "Flash_driver.h"
-
-//#include "FreeRTOSConfig.h"
-//#include "FreeRTOS.h"
-//#include "croutine.h"
-//#include "task.h"
-//#include "queue.h"
-//#include "semphr.h"
-//#include "portmacro.h"
-//#include "timers.h"
-
-#include "sys_error_codes.h"
-#include "sensline.h"
 #include "sens_types.h"
 
 #define DBG_VERSION
@@ -142,7 +129,7 @@ extern const relay::TRelay RelThree;
 extern uint32_t RtosHeapSize;
 
 //extern USART::TUSART Usart;
-extern MPU_9250::TAccGyroMagDriver_HL AccMagGyro;
+//extern MPU_9250::TAccGyroMagDriver_HL AccMagGyro;
 
 //******************************************************************************
 //  Секция объявлений функций (declaration)

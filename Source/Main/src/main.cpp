@@ -10,10 +10,10 @@
 #include "SensDev.h"
 #include "prog_ver.h"
 
-#include "dev_determ.h"
-#include "coding_switch.h"
-#include "discrete_out.h"
-#include "mems.h"
+//#include "dev_determ.h"
+//#include "coding_switch.h"
+//#include "discrete_out.h"
+//#include "mems.h"
 #include "usart_driver_.h"
 
 
@@ -110,35 +110,9 @@ SemaphoreHandle_t SlaveCommErrSem;      //для слейва: есть ошиб
 SemaphoreHandle_t MasterRtoTrigSem;     //для мастера: сработал флаг RTO для Slave-устройства в USART
 SemaphoreHandle_t MasterCommErrSem;     //для мастера: есть ошибка/ошибки связи по USART для Slave-устройства
 SemaphoreHandle_t PdSem;                //тестовый периодический опрос СЕНС ПД
-//SemaphoreHandle_t FlashTmr_TrigSem;     //сработал таймер программирования элемента Flash
-//SemaphoreHandle_t MemsWaitStopSem;      //сработал таймер на перезапуск mems-автомата
-//SemaphoreHandle_t TxSPI1_RdySem;        //данные переданы через SPI1
-//SemaphoreHandle_t RxSPI1_RdySem;        //данные приняты через SPI1
 SemaphoreHandle_t WrFlash;              //команда на запись данных во Flash
-//семафоры обработки измерений МЭМС
-//SemaphoreHandle_t MemsDevRdySem;        //МЭМС готов измерять
-//SemaphoreHandle_t MemsDevDoneSem;       //МЭМС измерил
-//SemaphoreHandle_t DevMemsStartSem;      //запуск измерений МЭМС на своей плате
-//SemaphoreHandle_t DevSensStartSem;      //запуск измерений МЭМС на плате датчика
-//SemaphoreHandle_t DevSensResSem;        //запрос результатов измерений МЭМС на плате датчика
-//SemaphoreHandle_t SensDevOkSem;         //измерения МЭМС на плате датчика стартовали
-//SemaphoreHandle_t SensDevResSem;        //результаты измерений МЭМС на плате датчика получены
-//SemaphoreHandle_t SensWrAxisRotateSem;  //необходимо записать AxisRotate в датчик
-//SemaphoreHandle_t SensAxisRotateOkSem;  //значение AxisRotate успешно записано в датчик
 SemaphoreHandle_t BtnTimer_TrigSem;     //
 SemaphoreHandle_t LedTimer_TrigSem;     //
-                                          
-//семафоры калибровки акселерометра
-//SemaphoreHandle_t AccCalib_X_UP_Sem;
-//SemaphoreHandle_t AccCalib_X_DOWN_Sem;
-//SemaphoreHandle_t AccCalib_Y_UP_Sem;      
-//SemaphoreHandle_t AccCalib_Y_DOWN_Sem;    
-//SemaphoreHandle_t AccCalib_Z_UP_Sem;      
-//SemaphoreHandle_t AccCalib_Z_DOWN_Sem;
-     
-//семафоры калибровки по углу
-//SemaphoreHandle_t User_Zeroing_Out_Sem;
-//SemaphoreHandle_t Factory_Zeroing_Out_Sem;
 
 SemaphoreHandle_t Tmr_TrigSem;
 SemaphoreHandle_t DiffExti_TrigSem;
@@ -182,16 +156,10 @@ static void check_create_timer( TimerHandle_t );
 
 int main(void)
 {
-//  Do.init();
-
-//  SetProgNum( __PROG_VERSION );
-
   init_ll();
   cfg_sys_clk();
   
   init_mx_gpio();
-//  DevDeterm.init_tmr();
-//  DevDeterm.is_dev();
 
 //----- Создание семафоров ----------------------------------------------------------------------------------------------------
   RtosHeapSize = xPortGetFreeHeapSize(); //размер кучи до создания семафоров
@@ -236,31 +204,7 @@ static void create_semphrs()
   check_create_semphr( SlaveCommErrSem         = xSemaphoreCreateBinary() );
   check_create_semphr( MasterRtoTrigSem        = xSemaphoreCreateBinary() );
   check_create_semphr( MasterCommErrSem        = xSemaphoreCreateBinary() );
-//  check_create_semphr( MemsWaitStopSem         = xSemaphoreCreateBinary() );
   check_create_semphr( PdSem                   = xSemaphoreCreateBinary() );
-                                               
-//  check_create_semphr( MemsDevRdySem           = xSemaphoreCreateBinary() );
-//  check_create_semphr( MemsDevDoneSem          = xSemaphoreCreateBinary() );
-//  check_create_semphr( DevMemsStartSem         = xSemaphoreCreateBinary() );
-//  check_create_semphr( DevSensStartSem         = xSemaphoreCreateBinary() );
-//  check_create_semphr( DevSensResSem           = xSemaphoreCreateBinary() );
-//  check_create_semphr( SensDevOkSem            = xSemaphoreCreateBinary() );
-//  check_create_semphr( SensDevResSem           = xSemaphoreCreateBinary() );
-//  check_create_semphr( SensWrAxisRotateSem     = xSemaphoreCreateBinary() );
-//  check_create_semphr( SensAxisRotateOkSem     = xSemaphoreCreateBinary() );  
-                                               
-//  check_create_semphr( AccCalib_X_UP_Sem       = xSemaphoreCreateBinary() );
-//  check_create_semphr( AccCalib_X_DOWN_Sem     = xSemaphoreCreateBinary() );
-//  check_create_semphr( AccCalib_Y_UP_Sem       = xSemaphoreCreateBinary() );
-//  check_create_semphr( AccCalib_Y_DOWN_Sem     = xSemaphoreCreateBinary() );
-//  check_create_semphr( AccCalib_Z_UP_Sem       = xSemaphoreCreateBinary() );
-//  check_create_semphr( AccCalib_Z_DOWN_Sem     = xSemaphoreCreateBinary() );
-  
-//  check_create_semphr( User_Zeroing_Out_Sem    = xSemaphoreCreateBinary() );
-//  check_create_semphr( Factory_Zeroing_Out_Sem = xSemaphoreCreateBinary() );
-  
-//  check_create_semphr( TxSPI1_RdySem           = xSemaphoreCreateBinary() );
-//  check_create_semphr( RxSPI1_RdySem           = xSemaphoreCreateBinary() );
   check_create_semphr( WrFlash                 = xSemaphoreCreateBinary() );
   check_create_semphr( BtnTimer_TrigSem        = xSemaphoreCreateBinary() );
   check_create_semphr( LedTimer_TrigSem        = xSemaphoreCreateBinary() );
@@ -281,36 +225,6 @@ static void create_mutexes()
 
 static void create_tasks()
 {
-//  constexpr uint16_t CODING_SWITCH_TASK_STACK_SIZE_B = 800U;
-//  constexpr uint16_t CODING_SWITCH_TASK_STACK_SIZE_W = CODING_SWITCH_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( xTaskCreate(coding_switch,                               //указатель на функцию, реализующую задачу
-//                     (char *)"CODING_SWITCH",                                 //имя функции - нуль-терминальная строка
-//							       CODING_SWITCH_TASK_STACK_SIZE_W,                         //глубина стека задачи
-//							       NULL,                                                    //указатель на произвольный параметр
-//							       4,                                                       //приоритет задачи (0 - самый низкий)
-//							       NULL));					 	                                      //указатель для получения дескриптора задачи				  
-//  RtosHeapSize = xPortGetFreeHeapSize(); //Получение объема свободной памяти кучи, доступной для выделения
-
-//  constexpr uint16_t DISCRETE_OUT_TASK_STACK_SIZE_B = 500U;
-//  constexpr uint16_t DISCRETE_OUT_TASK_STACK_SIZE_W = DISCRETE_OUT_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( xTaskCreate(discrete_out,                                //указатель на функцию, реализующую задачу
-//                     (char *)"DISCRETE_OUT",                                  //имя функции - нуль-терминальная строка
-//							       DISCRETE_OUT_TASK_STACK_SIZE_W,                          //глубина стека задачи
-//							       NULL,                                                    //указатель на произвольный параметр
-//							       3,                                                       //приоритет задачи (0 - самый низкий)
-//							       NULL));	        				 	                              //указатель для получения дескриптора задачи
-//  RtosHeapSize = xPortGetFreeHeapSize();
-
-//  constexpr uint16_t MEMS_TASK_STACK_SIZE_B = 3700U;
-//  constexpr uint16_t MEMS_TASK_STACK_SIZE_W = MEMS_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( xTaskCreate(mems,
-//                     (char *)"MEMS",
-//							       MEMS_TASK_STACK_SIZE_W,
-//							       NULL,
-//							       5,
-//							       NULL));
-//  RtosHeapSize = xPortGetFreeHeapSize();
-
   constexpr uint16_t LEV_GAUGE_TO_PC_TASK_STACK_SIZE_B = 1000U;
   constexpr uint16_t LEV_GAUGE_TO_PC_TASK_STACK_SIZE_W = LEV_GAUGE_TO_PC_TASK_STACK_SIZE_B / 4U;
   check_create_task( xTaskCreate(lev_gauge_to_pc,
@@ -320,74 +234,6 @@ static void create_tasks()
 							       4,
 							       NULL));
   RtosHeapSize = xPortGetFreeHeapSize();
-
-//  constexpr uint16_t BASE_TO_SENS_TASK_STACK_SIZE_B = 1000U;
-//  constexpr uint16_t BASE_TO_SENS_TASK_STACK_SIZE_W = BASE_TO_SENS_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( xTaskCreate(base_to_sens,
-//                     (char *)"BASE_TO_SENS",
-//							       BASE_TO_SENS_TASK_STACK_SIZE_W,
-//							       NULL,
-//							       4,
-//							       NULL));
-//  RtosHeapSize = xPortGetFreeHeapSize();
-
-//  constexpr uint16_t SENS_TO_MASTER_TASK_STACK_SIZE_B = 1000U;
-//  constexpr uint16_t SENS_TO_MASTER_TASK_STACK_SIZE_W = SENS_TO_MASTER_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( xTaskCreate(sens_to_master,
-//                     (char *)"SENS_TO_MASTER",
-//							       SENS_TO_MASTER_TASK_STACK_SIZE_W,
-//							       NULL,
-//							       4,
-//							       NULL));
-//  RtosHeapSize = xPortGetFreeHeapSize();
-
-//  constexpr uint16_t DEV_CTRL_TASK_STACK_SIZE_B   = 800U;
-//  constexpr uint16_t DEV_CTRL_TASK_STACK_SIZE_W = DEV_CTRL_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( xTaskCreate(dev_ctrl,
-//                     (char *)"DEV_CTRL",
-//							       DEV_CTRL_TASK_STACK_SIZE_W,
-//							       NULL,
-//							       4,
-//							       NULL));
-//  RtosHeapSize = xPortGetFreeHeapSize();
-
-//  constexpr uint16_t LOGGER_CTRL_TASK_STACK_SIZE_B = 1000U;
-//  constexpr uint16_t LOGGER_CTRL_TASK_STACK_SIZE_W = LOGGER_CTRL_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( xTaskCreate(logger_ctrl,
-//                     (char *)"LOGGER_CTRL",
-//							       LOGGER_CTRL_TASK_STACK_SIZE_W,
-//							       NULL,
-//							       4,
-//							       NULL));
-//  RtosHeapSize = xPortGetFreeHeapSize();
-//                   
-//  constexpr uint16_t LED_TOGGLE_TASK_STACK_SIZE_B = 300U;
-//  constexpr uint16_t LED_TOGGLE_TASK_STACK_SIZE_W = LED_TOGGLE_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( 
-//                    xTaskCreate(
-//                                vLedCtrl,                   //указатель на функцию, реализующую задачу
-//                                (char *)"LED_TOGGLE",         //имя функции - нуль-терминальная строка
-//							                  LED_TOGGLE_TASK_STACK_SIZE_W, //глубина стека задачи
-//							                  NULL,                         //указатель на произвольный параметр
-//							                  3,                            //приоритет задачи (0 - самый низкий)
-//							                  NULL
-//                               )
-//                   );	        				 	                      //указатель для получения дескриптора задачи
-//  RtosHeapSize = xPortGetFreeHeapSize();
-//                   
-//  constexpr uint16_t PUSH_BUTTON_TASK_STACK_SIZE_B = 300U;
-//  constexpr uint16_t PUSH_BUTTON_TASK_STACK_SIZE_W = PUSH_BUTTON_TASK_STACK_SIZE_B / 4U;
-//  check_create_task( 
-//                    xTaskCreate(
-//                                vPushButton,                   //указатель на функцию, реализующую задачу
-//                                (char *)"PUSH_BUTTON",         //имя функции - нуль-терминальная строка
-//							                  PUSH_BUTTON_TASK_STACK_SIZE_W, //глубина стека задачи
-//							                  NULL,                          //указатель на произвольный параметр
-//							                  3,                             //приоритет задачи (0 - самый низкий)
-//							                  NULL
-//                               )
-//                   );	        				 	                      //указатель для получения дескриптора задачи
-//  RtosHeapSize = xPortGetFreeHeapSize();
 }
 
 static void create_timers()
@@ -399,44 +245,6 @@ static void create_timers()
 //							                                  ( void * ) 0, //идентификатор не нужен, т.к. создаем только один экземпляр таймера
 //							                                  code_sw_tmr
 //											                        )
-//                    );
-//                    
-//  check_create_timer( DoUncalibTmr = xTimerCreate(
-//                                                   "DoUncalibTmr",
-//							                                     pdMS_TO_TICKS( TDiscreteOut::PULSE_TIME_MS ),
-//							                                     pdFALSE,      //интервальный таймер
-//							                                     ( void * ) 0, //идентификатор не нужен, т.к. создаем только один экземпляр таймера
-//							                                     do_uncalib_tmr
-//											                           )
-//                    );
-////                    TimerHandle_t MemsTmr;                      //таймер для нужд задачи обработки Mems-датчика
-////  check_create_timer( MemsTmr = xTimerCreate(
-////                                              "MemsTmr",
-////							                                pdMS_TO_TICKS( TMems::ANSWER_WAIT_MS ),
-////							                                pdFALSE,      //интервальный таймер
-////							                                ( void * ) 0, //идентификатор не нужен, т.к. создаем только один экземпляр таймера
-////							                                mems_tmr
-////											                      )
-////                    );
-//  
-//  constexpr uint32_t PD_TIME_MS = 500U;  
-//  check_create_timer( PdTmr = xTimerCreate(
-//                                                   "PdTmr",
-//							                                     pdMS_TO_TICKS( PD_TIME_MS ),
-//							                                     pdTRUE,      //периодический таймер
-//							                                     ( void * ) 0, //идентификатор не нужен, т.к. создаем только один экземпляр таймера
-//							                                     pd_tmr
-//											                           )
-//                    );
-//										
-//  check_create_timer( 
-//                     BtnTimer = xTimerCreate(
-//                                             "BtnTimer",
-//							                               pdMS_TO_TICKS( 10U ),
-//							                               pdTRUE,                //периодический таймер
-//							                               ( void * ) 0,          //идентификатор не нужен, т.к. создаем только один экземпляр таймера
-//							                               vTimerCallback
-//											                      )
 //                    );
 }
 

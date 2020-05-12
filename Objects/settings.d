@@ -7,7 +7,6 @@
 .\objects\settings.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\settings.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\settings.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\settings.o: .\Source\MotionTL\inc\motion_tl.h
 .\objects\settings.o: .\Source\Ext_Dev\inc\relay.h
 .\objects\settings.o: .\Source\Main\inc\lib.h
 .\objects\settings.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_usart.h
@@ -33,19 +32,9 @@
 .\objects\settings.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\settings.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
 .\objects\settings.o: .\Source\Protocols\inc\CRC16.h
-.\objects\settings.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_hl.h
-.\objects\settings.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint
-.\objects\settings.o: .\Source\MCU_Drivers\inc\I2C_driver.h
-.\objects\settings.o: .\Source\Main\inc\hard_config.h
-.\objects\settings.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_ll.h
-.\objects\settings.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_register_map.h
-.\objects\settings.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_types.h
-.\objects\settings.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_vals.h
-.\objects\settings.o: .\Source\Ext_Dev\inc\I2C_Protocol.h
-.\objects\settings.o: .\Source\Main\inc\model.h
+.\objects\settings.o: .\Source\MCU_Drivers\inc\Flash_driver.h
 .\objects\settings.o: .\Source\Main\inc\rtos_headers.h
 .\objects\settings.o: .\Source\RTOS\inc\FreeRTOSConfig.h
-.\objects\settings.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\settings.o: .\Source\RTOS\inc\FreeRTOS.h
 .\objects\settings.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\settings.o: .\Source\RTOS\inc\projdefs.h
@@ -60,10 +49,4 @@
 .\objects\settings.o: .\Source\RTOS\inc\queue.h
 .\objects\settings.o: .\Source\RTOS\inc\semphr.h
 .\objects\settings.o: .\Source\RTOS\inc\timers.h
-.\objects\settings.o: .\Source\MCU_Drivers\inc\Flash_driver.h
-.\objects\settings.o: .\Source\Main\inc\sys_error_codes.h
-.\objects\settings.o: .\Source\Line\inc\sensline.h
-.\objects\settings.o: .\Source\Line\inc\sensline_cfg.h
-.\objects\settings.o: .\Source\Line\inc\Line_wrapper_SPL_to_LL.h
-.\objects\settings.o: .\Source\Line\inc\spl_old_types.h
 .\objects\settings.o: .\Source\Line\inc\SensProc.h

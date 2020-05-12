@@ -80,13 +80,13 @@ bool TSettings::chk_u_par( int16_t Param ) const
 
 void TSettings::chk_dev( MySettings &New )
 {
-  New.DevSets.Thr = ( chk_param( __THR, New.DevSets.Thr ) )
-                    ? Model.get_thr()                             //восстановить предыдущее значение настройки
-                    : roundf( New.DevSets.Thr );                  //округлить новое значение
+//  New.DevSets.Thr = ( chk_param( __THR, New.DevSets.Thr ) )
+////                    ? Model.get_thr()                             //восстановить предыдущее значение настройки
+////                    : roundf( New.DevSets.Thr );                  //округлить новое значение
 
-  New.DevSets.Hyst = ( chk_param( __HYST, New.DevSets.Hyst ) )
-                     ? Model.get_hyst()                           //восстановить предыдущее значение настройки
-                     : roundf( New.DevSets.Hyst );                //округлить новое значение
+////  New.DevSets.Hyst = ( chk_param( __HYST, New.DevSets.Hyst ) )
+////                     ? Model.get_hyst()                           //восстановить предыдущее значение настройки
+////                     : roundf( New.DevSets.Hyst );                //округлить новое значение
 
   //дополнительная проверка для гистерезиса
   if ( New.DevSets.Thr - New.DevSets.Hyst < __LOW_DIF )        //если значение для возвата в состояние "закрыта" меньше минимального, ...
@@ -94,9 +94,9 @@ void TSettings::chk_dev( MySettings &New )
     New.DevSets.Hyst = New.DevSets.Thr - __LOW_DIF;            //...то установить максимально допустимое значение гистерезиса для данного порога
   }
 
-  New.DevSets.Bias = ( chk_param( __BIAS, New.DevSets.Bias ) )
-                     ? Model.get_bias()                           //восстановить предыдущее значение настройки
-                     : roundf( New.DevSets.Bias );                //округлить новое значение
+//  New.DevSets.Bias = ( chk_param( __BIAS, New.DevSets.Bias ) )
+//                     ? Model.get_bias()                           //восстановить предыдущее значение настройки
+//                     : roundf( New.DevSets.Bias );                //округлить новое значение
 }
 
 bool TSettings::chk_calib( int16_t Param ) const

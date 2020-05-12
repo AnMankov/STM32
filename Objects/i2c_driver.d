@@ -21,7 +21,6 @@
 .\objects\i2c_driver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\i2c_driver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\i2c_driver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\i2c_driver.o: .\Source\MotionTL\inc\motion_tl.h
 .\objects\i2c_driver.o: .\Source\Ext_Dev\inc\relay.h
 .\objects\i2c_driver.o: .\Source\Main\inc\lib.h
 .\objects\i2c_driver.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_usart.h
@@ -47,22 +46,7 @@
 .\objects\i2c_driver.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\i2c_driver.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
 .\objects\i2c_driver.o: .\Source\Protocols\inc\CRC16.h
-.\objects\i2c_driver.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_hl.h
-.\objects\i2c_driver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint
+.\objects\i2c_driver.o: .\Source\MCU_Drivers\inc\Flash_driver.h
+.\objects\i2c_driver.o: .\Source\Line\inc\sens_types.h
 .\objects\i2c_driver.o: .\Source\MCU_Drivers\inc\I2C_driver.h
 .\objects\i2c_driver.o: .\Source\Main\inc\hard_config.h
-.\objects\i2c_driver.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_ll.h
-.\objects\i2c_driver.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_register_map.h
-.\objects\i2c_driver.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_types.h
-.\objects\i2c_driver.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_vals.h
-.\objects\i2c_driver.o: .\Source\Ext_Dev\inc\I2C_Protocol.h
-.\objects\i2c_driver.o: .\Source\Main\inc\model.h
-.\objects\i2c_driver.o: .\Source\Tasks\inc\settings.h
-.\objects\i2c_driver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\i2c_driver.o: .\Source\Line\inc\sens_types.h
-.\objects\i2c_driver.o: .\Source\MCU_Drivers\inc\Flash_driver.h
-.\objects\i2c_driver.o: .\Source\Main\inc\sys_error_codes.h
-.\objects\i2c_driver.o: .\Source\Line\inc\sensline.h
-.\objects\i2c_driver.o: .\Source\Line\inc\sensline_cfg.h
-.\objects\i2c_driver.o: .\Source\Line\inc\Line_wrapper_SPL_to_LL.h
-.\objects\i2c_driver.o: .\Source\Line\inc\spl_old_types.h

@@ -40,7 +40,6 @@
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\main.o: .\Source\MotionTL\inc\motion_tl.h
 .\objects\main.o: .\Source\Ext_Dev\inc\relay.h
 .\objects\main.o: .\Source\Main\inc\lib.h
 .\objects\main.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_usart.h
@@ -66,34 +65,15 @@
 .\objects\main.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\main.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
 .\objects\main.o: .\Source\Protocols\inc\CRC16.h
-.\objects\main.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_hl.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint
-.\objects\main.o: .\Source\MCU_Drivers\inc\I2C_driver.h
-.\objects\main.o: .\Source\Main\inc\hard_config.h
-.\objects\main.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_ll.h
-.\objects\main.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_register_map.h
-.\objects\main.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_types.h
-.\objects\main.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_vals.h
-.\objects\main.o: .\Source\Ext_Dev\inc\I2C_Protocol.h
-.\objects\main.o: .\Source\Main\inc\model.h
-.\objects\main.o: .\Source\Tasks\inc\settings.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\main.o: .\Source\Line\inc\sens_types.h
 .\objects\main.o: .\Source\MCU_Drivers\inc\Flash_driver.h
-.\objects\main.o: .\Source\Main\inc\sys_error_codes.h
-.\objects\main.o: .\Source\Line\inc\sensline.h
-.\objects\main.o: .\Source\Line\inc\sensline_cfg.h
-.\objects\main.o: .\Source\Line\inc\Line_wrapper_SPL_to_LL.h
-.\objects\main.o: .\Source\Line\inc\spl_old_types.h
+.\objects\main.o: .\Source\Line\inc\sens_types.h
 .\objects\main.o: .\Source\MCU_Drivers\inc\interface.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint
 .\objects\main.o: .\Source\Line\inc\SensProc.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: .\Source\Main\inc\SensDev.h
 .\objects\main.o: .\Source\Main\inc\prog_ver.h
-.\objects\main.o: .\Source\Main\inc\dev_determ.h
-.\objects\main.o: .\Source\Tasks\inc\coding_switch.h
-.\objects\main.o: .\Source\Tasks\inc\discrete_out.h
-.\objects\main.o: .\Source\Tasks\inc\mems.h
-.\objects\main.o: .\Source\Main\inc\angles_cnt.h
 .\objects\main.o: .\Source\Protocols\inc\usart_driver_.h
 .\objects\main.o: .\Source\Ext_Dev\inc\RS-485_phy.h
 .\objects\main.o: .\Source\Ext_Dev\inc\MAX13430EEUB.h
+.\objects\main.o: .\Source\Main\inc\hard_config.h

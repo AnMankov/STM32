@@ -6,7 +6,7 @@
 #include "lib.h"
 #include "Flash_driver.h"
 #include "old_flash_lib.h"
-#include "discrete_out.h"
+//#include "discrete_out.h"
 
 uint8_t FlashErrCtr = 0U;
 

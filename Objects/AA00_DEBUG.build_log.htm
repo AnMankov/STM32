@@ -29,8 +29,23 @@ Project File Date:  05/12/2020
 *** Warning: Using Microlib and C++ file(s) might cause the linker to fail !
   
 Build target 'DEBUG'
+compiling main.cpp...
+.\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+Source\Main\src\main.cpp(353): warning:  #1441-D: nonstandard cast on lvalue
+    for ( TVcoreRange::T ctr = TVcoreRange::_MIN; ctr < TVcoreRange::_MAX; ++(uint8_t)ctr )
+Source\Main\src\main.cpp(373): warning:  #1441-D: nonstandard cast on lvalue
+    for ( TLatency::T ctr = TLatency::_MIN; ctr < TLatency::_MAX; ++(uint8_t)ctr )
+Source\Main\src\main.cpp(482): warning:  #550-D: variable "SysClkSource"  was set but never used
+    uint32_t SysClkSource = 0U;
+Source\Main\src\main.cpp(292): warning:  #177-D: function "check_create_timer"  was declared but never referenced
+  static void check_create_timer(TimerHandle_t TimerHandle)
+Source\Main\src\main.cpp: 5 warnings, 0 errors
+linking...
+Program Size: Code=22912 RO-data=1240 RW-data=1248 ZI-data=47712  
+FromELF: creating hex file...
 After Build - User command #1: C:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin --output=.\Output\AA00_DEBUG.bin .\Objects\AA00_DEBUG.axf
-".\Objects\AA00_DEBUG.axf" - 0 Error(s), 0 Warning(s).
+".\Objects\AA00_DEBUG.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -44,7 +59,7 @@ Package Vendor: Keil
   C:\Keil_v5\ARM\PACK\Keil\STM32L4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:18
 </pre>
 </body>
 </html>

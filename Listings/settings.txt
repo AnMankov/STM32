@@ -2,120 +2,45 @@
 ; commandline ArmCC [--cpp11 --list --split_sections --debug -c --asm --interleave -o.\objects\settings.o --asm_dir=.\Listings\ --list_dir=.\Listings\ --depend=.\objects\settings.d --cpu=Cortex-M4.fp --apcs=interwork -O0 --diag_suppress=9931 -I".\STM32L4 Low Layer drivers\inc" -I.\Source\Core\inc -I.\Source\Protocols\inc -I.\Source\Ext_Dev\inc -I.\Source\Ext_Dev\inc\LSM6DS3 -I.\Source\Ext_Dev\inc\LSM303DLHC -I.\Source\Ext_Dev\inc\MPU-9250 -I.\Source\Line\inc -I.\Source\Main\inc -I.\Source\MCU_Drivers\inc -I.\Source\MCU_Drivers\inc -I.\Source\MotionTL\inc -I.\Source\RTOS\inc -I.\Source\Tasks\inc -I.\Source\Ext_Dev\inc\AT45 -I.\Objects -I.\RTE\_DEBUG -IC:\Keil_v5\ARM\PACK\Keil\STM32L4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include -IC:\Keil_v5\ARM\CMSIS\Include -D__MICROLIB -D__UVISION_VERSION=524 -DSTM32L431xx -DHSE_VALUE=8000000 -DUSE_FULL_LL_DRIVER -DSTM32L431xx -DDEBUG --omf_browse=.\objects\settings.crf Source\Tasks\src\settings.cpp]
                           THUMB
 
-                          AREA ||i._ZN9TSettings7chk_devER10MySettings||, CODE, READONLY, ALIGN=2
+                          AREA ||i._ZN9TSettings7chk_devER10MySettings||, CODE, READONLY, ALIGN=1
 
                   _ZN9TSettings7chk_devER10MySettings PROC ; TSettings::chk_dev(MySettings&)
 ;;;80     
 ;;;81     void TSettings::chk_dev( MySettings &New )
-000000  b570              PUSH     {r4-r6,lr}
+000000  7a4b              LDRB     r3,[r1,#9]
 ;;;82     {
-000002  4605              MOV      r5,r0
-000004  460c              MOV      r4,r1
-;;;83       New.DevSets.Thr = ( chk_param( __THR, New.DevSets.Thr ) )
-000006  7a62              LDRB     r2,[r4,#9]
-000008  4629              MOV      r1,r5
-00000a  4628              MOV      r0,r5
-00000c  f7fffffe          BL       _ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_ ; bool TSettings::chk_param<unsigned char>(const TSettings::TRange&, T1) const
-000010  b138              CBZ      r0,|L1.34|
-;;;84                         ? Model.get_thr()                             //восстановить предыдущее значение настройки
-000012  4832              LDR      r0,|L1.220|
-000014  f7fffffe          BL       _ZN6TModel7get_thrEv ; TModel::get_thr()
-000018  ee000a10          VMOV     s0,r0
-00001c  eeb80a40          VCVT.F32.U32 s0,s0
-000020  e008              B        |L1.52|
-                  |L1.34|
-;;;85                         : roundf( New.DevSets.Thr );                  //округлить новое значение
-000022  7a60              LDRB     r0,[r4,#9]
-000024  ee000a90          VMOV     s1,r0
-000028  eef80a60          VCVT.F32.U32 s1,s1
-00002c  eeb00a60          VMOV.F32 s0,s1
-000030  f7fffffe          BL       __hardfp_roundf
-                  |L1.52|
-000034  eebc0ac0          VCVT.U32.F32 s0,s0
-000038  ee100a10          VMOV     r0,s0
-00003c  7260              STRB     r0,[r4,#9]
+;;;83     //  New.DevSets.Thr = ( chk_param( __THR, New.DevSets.Thr ) )
+;;;84     ////                    ? Model.get_thr()                             //восстановить предыдущее значение настройки
+;;;85     ////                    : roundf( New.DevSets.Thr );                  //округлить новое значение
 ;;;86     
-;;;87       New.DevSets.Hyst = ( chk_param( __HYST, New.DevSets.Hyst ) )
-00003e  7aa2              LDRB     r2,[r4,#0xa]
-000040  1d29              ADDS     r1,r5,#4
-000042  4628              MOV      r0,r5
-000044  f7fffffe          BL       _ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_ ; bool TSettings::chk_param<unsigned char>(const TSettings::TRange&, T1) const
-000048  b138              CBZ      r0,|L1.90|
-;;;88                          ? Model.get_hyst()                           //восстановить предыдущее значение настройки
-00004a  4824              LDR      r0,|L1.220|
-00004c  f7fffffe          BL       _ZN6TModel8get_hystEv ; TModel::get_hyst()
-000050  ee000a10          VMOV     s0,r0
-000054  eeb80a40          VCVT.F32.U32 s0,s0
-000058  e008              B        |L1.108|
-                  |L1.90|
-;;;89                          : roundf( New.DevSets.Hyst );                //округлить новое значение
-00005a  7aa0              LDRB     r0,[r4,#0xa]
-00005c  ee000a90          VMOV     s1,r0
-000060  eef80a60          VCVT.F32.U32 s1,s1
-000064  eeb00a60          VMOV.F32 s0,s1
-000068  f7fffffe          BL       __hardfp_roundf
-                  |L1.108|
-00006c  eebc0ac0          VCVT.U32.F32 s0,s0
-000070  ee100a10          VMOV     r0,s0
-000074  72a0              STRB     r0,[r4,#0xa]
+;;;87     ////  New.DevSets.Hyst = ( chk_param( __HYST, New.DevSets.Hyst ) )
+;;;88     ////                     ? Model.get_hyst()                           //восстановить предыдущее значение настройки
+;;;89     ////                     : roundf( New.DevSets.Hyst );                //округлить новое значение
 ;;;90     
 ;;;91       //дополнительная проверка для гистерезиса
 ;;;92       if ( New.DevSets.Thr - New.DevSets.Hyst < __LOW_DIF )        //если значение для возвата в состояние "закрыта" меньше минимального, ...
-000076  7a61              LDRB     r1,[r4,#9]
-000078  7aa0              LDRB     r0,[r4,#0xa]
-00007a  1a08              SUBS     r0,r1,r0
-00007c  f9b51018          LDRSH    r1,[r5,#0x18]
-000080  4288              CMP      r0,r1
-000082  da03              BGE      |L1.140|
+000002  7a8a              LDRB     r2,[r1,#0xa]
+000004  1a9a              SUBS     r2,r3,r2
+000006  f9b03018          LDRSH    r3,[r0,#0x18]
+00000a  429a              CMP      r2,r3
+00000c  da03              BGE      |L1.22|
 ;;;93       {                                                               
 ;;;94         New.DevSets.Hyst = New.DevSets.Thr - __LOW_DIF;            //...то установить максимально допустимое значение гистерезиса для данного порога
-000084  7a60              LDRB     r0,[r4,#9]
-000086  7e29              LDRB     r1,[r5,#0x18]
-000088  1a40              SUBS     r0,r0,r1
-00008a  72a0              STRB     r0,[r4,#0xa]
-                  |L1.140|
+00000e  7a4a              LDRB     r2,[r1,#9]
+000010  7e03              LDRB     r3,[r0,#0x18]
+000012  1ad2              SUBS     r2,r2,r3
+000014  728a              STRB     r2,[r1,#0xa]
+                  |L1.22|
 ;;;95       }
 ;;;96     
-;;;97       New.DevSets.Bias = ( chk_param( __BIAS, New.DevSets.Bias ) )
-00008c  f994000b          LDRSB    r0,[r4,#0xb]
-000090  f9b51008          LDRSH    r1,[r5,#8]
-000094  4281              CMP      r1,r0
-000096  dc05              BGT      |L1.164|
-000098  f9b5100a          LDRSH    r1,[r5,#0xa]
-00009c  4281              CMP      r1,r0
-00009e  db01              BLT      |L1.164|
-0000a0  2101              MOVS     r1,#1
-0000a2  e000              B        |L1.166|
-                  |L1.164|
-0000a4  2100              MOVS     r1,#0
-                  |L1.166|
-0000a6  b139              CBZ      r1,|L1.184|
-;;;98                          ? Model.get_bias()                           //восстановить предыдущее значение настройки
-0000a8  480c              LDR      r0,|L1.220|
-0000aa  f7fffffe          BL       _ZN6TModel8get_biasEv ; TModel::get_bias()
-0000ae  ee000a10          VMOV     s0,r0
-0000b2  eeb80ac0          VCVT.F32.S32 s0,s0
-0000b6  e009              B        |L1.204|
-                  |L1.184|
-;;;99                          : roundf( New.DevSets.Bias );                //округлить новое значение
-0000b8  f994000b          LDRSB    r0,[r4,#0xb]
-0000bc  ee000a90          VMOV     s1,r0
-0000c0  eef80ae0          VCVT.F32.S32 s1,s1
-0000c4  eeb00a60          VMOV.F32 s0,s1
-0000c8  f7fffffe          BL       __hardfp_roundf
-                  |L1.204|
-0000cc  eebd0ac0          VCVT.S32.F32 s0,s0
-0000d0  ee100a10          VMOV     r0,s0
-0000d4  b241              SXTB     r1,r0
-0000d6  72e1              STRB     r1,[r4,#0xb]
+;;;97     //  New.DevSets.Bias = ( chk_param( __BIAS, New.DevSets.Bias ) )
+;;;98     //                     ? Model.get_bias()                           //восстановить предыдущее значение настройки
+;;;99     //                     : roundf( New.DevSets.Bias );                //округлить новое значение
 ;;;100    }
-0000d8  bd70              POP      {r4-r6,pc}
+000016  4770              BX       lr
 ;;;101    
                           ENDP
 
-0000da  0000              DCW      0x0000
-                  |L1.220|
-                          DCD      Model
 
                           AREA ||i._ZN9TSettingsC1Ev||, CODE, READONLY, ALIGN=2
 
@@ -598,9 +523,9 @@
                           DCD      0x00000000
                           RELOC 38, __sti___12_settings_cpp_Settings
 
-                          AREA ||t._ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_||, COMGROUP=_ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_, CODE, READONLY, ALIGN=1
+                          AREA ||t._ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_||, COMGROUP=_ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_, CODE, READONLY, ALIGN=1
 
-                  _ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_ PROC ; bool TSettings::chk_param<unsigned char>(const TSettings::TRange&, T1) const
+                  _ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_ PROC ; bool TSettings::chk_param<short>(const TSettings::TRange&, T1) const
 ;;;275      template< typename T >
 ;;;276      bool chk_param( const TRange &Range, T Param ) const //true => параметр находится в указанном диапазоне
 000000  4603              MOV      r3,r0
@@ -627,45 +552,9 @@
                           ENDP
 
 
-                          AREA ||area_number.100||, COMGROUP=_ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_, LINKORDER=||t._ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
+                          AREA ||area_number.100||, COMGROUP=_ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_, LINKORDER=||t._ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
 
                           EXPORTAS ||area_number.100||, ||.ARM.exidx||
-                          DCD      0x00000000
-                          RELOC 42, ||t._ZNK9TSettings9chk_paramIhEEbRKNS_6TRangeET_||
-                          DCD      0x00000001
-
-                          AREA ||t._ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_||, COMGROUP=_ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_, CODE, READONLY, ALIGN=1
-
-                  _ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_ PROC ; bool TSettings::chk_param<short>(const TSettings::TRange&, T1) const
-;;;275      template< typename T >
-;;;276      bool chk_param( const TRange &Range, T Param ) const //true => параметр находится в указанном диапазоне
-000000  4603              MOV      r3,r0
-;;;277      {
-;;;278        return (
-000002  f9b10000          LDRSH    r0,[r1,#0]
-000006  4290              CMP      r0,r2
-000008  dc05              BGT      |L106.22|
-;;;279                Param >= Range.Min
-;;;280                &&
-;;;281                Param <= Range.Max
-00000a  f9b10002          LDRSH    r0,[r1,#2]
-00000e  4290              CMP      r0,r2
-000010  db01              BLT      |L106.22|
-000012  2001              MOVS     r0,#1                 ;278
-                  |L106.20|
-;;;282               );
-;;;283      }
-000014  4770              BX       lr
-                  |L106.22|
-000016  2000              MOVS     r0,#0                 ;278
-000018  e7fc              B        |L106.20|
-;;;284    
-                          ENDP
-
-
-                          AREA ||area_number.107||, COMGROUP=_ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_, LINKORDER=||t._ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
-
-                          EXPORTAS ||area_number.107||, ||.ARM.exidx||
                           DCD      0x00000000
                           RELOC 42, ||t._ZNK9TSettings9chk_paramIsEEbRKNS_6TRangeET_||
                           DCD      0x00000001

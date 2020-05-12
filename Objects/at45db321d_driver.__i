@@ -1,6 +1,0 @@
---cpp -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --asm --interleave --asm_dir ".\\Listings\\" -I ".\STM32L4 Low Layer drivers\inc" -I .\Source\Core\inc -I .\Source\Protocols\inc -I .\Source\Ext_Dev\inc -I .\Source\Ext_Dev\inc\LSM6DS3 -I .\Source\Ext_Dev\inc\LSM303DLHC -I .\Source\Ext_Dev\inc\MPU-9250 -I .\Source\Line\inc -I .\Source\Main\inc -I .\Source\MCU_Drivers\inc -I .\Source\MCU_Drivers\inc -I .\Source\MotionTL\inc -I .\Source\RTOS\inc -I .\Source\Tasks\inc -I ..\Lib\Objects -I .\Source\Ext_Dev\inc\AT45 --cpp11
--I.\RTE\_DEBUG
--IC:\Keil_v5\ARM\PACK\Keil\STM32L4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include
--IC:\Keil_v5\ARM\CMSIS\Include
--D__UVISION_VERSION="523" -DSTM32L431xx -DHSE_VALUE="8000000" -DUSE_FULL_LL_DRIVER -DSTM32L431xx -DDEBUG
--o .\objects\at45db321d_driver.o --list_dir ".\\Listings\\" --list --omf_browse .\objects\at45db321d_driver.crf --depend .\objects\at45db321d_driver.d "Source\Ext_Dev\src\AT45\AT45DB321D_driver.cpp"
