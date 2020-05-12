@@ -1,0 +1,229 @@
+<html>
+<body>
+<pre>
+<h1>�Vision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: �Vision V5.23.0.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: am neo, neo, LIC=IC9VE-56MHH-GP1ZR-KS9RU-7DGAW-9HK2L
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional  Version: 5.23
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.23
+Dialog DLL:      DCM.DLL V1.15.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.27.0.0
+ 
+<h2>Project:</h2>
+D:\Projects\DKS_AT45_LOGGER\App\FCx.uvprojx
+Project File Date:  03/12/2020
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+*** Warning: Using Microlib and C++ file(s) might cause the linker to fail !
+  
+Build Project 'FCx' - Target 'DEBUG'
+compiling Button.cpp...
+compiling Relay.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Ext_Dev\src\Relay.cpp: 2 warnings, 0 errors
+compiling Led.cpp...
+compiling MPU-9250_acc_gyro_mag_driver_hl.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Ext_Dev\src\MPU-9250_acc_gyro_mag_driver_hl.cpp: 2 warnings, 0 errors
+compiling hard_config.cpp...
+compiling main.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Main\src\main.cpp(579): warning:  #1441-D: nonstandard cast on lvalue
+    for ( TVcoreRange::T ctr = TVcoreRange::_MIN; ctr < TVcoreRange::_MAX; ++(uint8_t)ctr )
+D:\Projects\DKS_AT45_LOGGER\App\Source\Main\src\main.cpp(599): warning:  #1441-D: nonstandard cast on lvalue
+    for ( TLatency::T ctr = TLatency::_MIN; ctr < TLatency::_MAX; ++(uint8_t)ctr )
+D:\Projects\DKS_AT45_LOGGER\App\Source\Main\src\main.cpp(708): warning:  #550-D: variable "SysClkSource"  was set but never used
+    uint32_t SysClkSource = 0U;
+Source\Main\src\main.cpp: 5 warnings, 0 errors
+compiling dev_determ.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Main\src\dev_determ.cpp: 2 warnings, 0 errors
+compiling model.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Main\src\model.cpp(115): warning:  #186-D: pointless comparison of unsigned integer with zero
+        Src >= CodeRange.Min
+D:\Projects\DKS_AT45_LOGGER\App\Source\Main\src\model.cpp(142): warning:  #186-D: pointless comparison of unsigned integer with zero
+        Src >= CodeRange.Min
+Source\Main\src\model.cpp: 4 warnings, 0 errors
+compiling usart_driver_.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Protocols\src\usart_driver_.cpp: 2 warnings, 0 errors
+compiling Flash_driver.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\MCU_Drivers\src\Flash_driver.cpp(20): warning:  #1299-D: members and base-classes will be initialized in declaration order, not in member initialisation list order
+  DataPageCtr( 0U )
+D:\Projects\DKS_AT45_LOGGER\App\Source\MCU_Drivers\src\Flash_driver.cpp(168): warning:  #174-D: expression has no effect
+      __disable_irq;
+D:\Projects\DKS_AT45_LOGGER\App\Source\MCU_Drivers\src\Flash_driver.cpp(172): warning:  #1441-D: nonstandard cast on lvalue
+      *((
+_IO uint32_t *)StartAddr)++ = *pData++;
+D:\Projects\DKS_AT45_LOGGER\App\Source\MCU_Drivers\src\Flash_driver.cpp(173): warning:  #1441-D: nonstandard cast on lvalue
+      *((
+_IO uint32_t *)StartAddr)++ = *pData++;
+D:\Projects\DKS_AT45_LOGGER\App\Source\MCU_Drivers\src\Flash_driver.cpp(176): warning:  #174-D: expression has no effect
+      __enable_irq;
+Source\MCU_Drivers\src\Flash_driver.cpp: 7 warnings, 0 errors
+compiling SPI_dirver.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\MCU_Drivers\src\SPI_dirver.cpp(148): warning:  #177-D: variable "SpiDma"  was declared but never referenced
+    TSpiDma SpiDma[] =
+Source\MCU_Drivers\src\SPI_dirver.cpp: 1 warning, 0 errors
+compiling I2C_driver.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\MCU_Drivers\src\I2C_driver.cpp: 2 warnings, 0 errors
+compiling modbus_app.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Protocols\src\modbus_app.cpp(176): warning:  #550-D: variable "PrevQty"  was set but never used
+    static uint8_t PrevQty = 0U;
+D:\Projects\DKS_AT45_LOGGER\App\Source\Protocols\src\modbus_app.cpp(585): warning:  #550-D: variable "CoilAddr"  was set but never used
+    TLittleEndian CoilAddr;
+D:\Projects\DKS_AT45_LOGGER\App\Source\Protocols\src\modbus_app.cpp(625): warning:  #550-D: variable "RegAddr"  was set but never used
+    TLittleEndian RegAddr;
+D:\Projects\DKS_AT45_LOGGER\App\Source\Protocols\src\modbus_app.cpp(712): warning:  #1293-D: assignment in condition
+  	while ( *Dest++ = *Src++ ) {};
+Source\Protocols\src\modbus_app.cpp: 6 warnings, 0 errors
+compiling coding_switch.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Tasks\src\coding_switch.cpp: 2 warnings, 0 errors
+compiling modbus_link.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Protocols\src\modbus_link.cpp: 2 warnings, 0 errors
+compiling discrete_out.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\src\discrete_out.cpp(80): warning:  #111-D: statement is unreachable
+    Do.init();
+Source\Tasks\src\discrete_out.cpp: 3 warnings, 0 errors
+compiling dev_handlers.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Protocols\src\dev_handlers.cpp(1022): warning:  #177-D: variable "Res"  was declared but never referenced
+    bool Res = false;
+Source\Protocols\src\dev_handlers.cpp: 3 warnings, 0 errors
+compiling mems.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\src\mems.cpp(265): warning:  #177-D: variable "Data"  was declared but never referenced
+    TModel::TAccelData Data;
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\src\mems.cpp(358): warning:  #177-D: variable "WAIT_CALIB_DLY"  was declared but never referenced
+    constexpr uint8_t WAIT_CALIB_DLY = 10U; 
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\src\mems.cpp(413): warning:  #550-D: variable "AccelAxisSum"  was set but never used
+      static float AccelAxisSum = 0.0f;
+Source\Tasks\src\mems.cpp: 5 warnings, 0 errors
+compiling settings.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Tasks\src\settings.cpp: 2 warnings, 0 errors
+compiling base_to_sens.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Tasks\src\base_to_sens.cpp: 2 warnings, 0 errors
+compiling base_to_pc.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\src\base_to_pc.cpp(52): warning:  #177-D: function "addr_determ"  was declared but never referenced
+  static void addr_determ()
+Source\Tasks\src\base_to_pc.cpp: 3 warnings, 0 errors
+compiling dev_ctrl.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Tasks\src\dev_ctrl.cpp: 2 warnings, 0 errors
+compiling sens_to_master.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Tasks\src\sens_to_master.cpp: 2 warnings, 0 errors
+compiling led_ctrl.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Tasks\src\led_ctrl.cpp: 2 warnings, 0 errors
+compiling logger_ctrl.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\src\logger_ctrl.cpp(11): warning:  #177-D: variable "LoggerState"  was declared but never referenced
+  static TLoggerState LoggerState = TLoggerState::__OFF;
+Source\Tasks\src\logger_ctrl.cpp: 3 warnings, 0 errors
+compiling button_poll.cpp...
+D:\Projects\DKS_AT45_LOGGER\App\Source\Line\inc\sens_types.h(59): warning:  #229-D: bit field cannot contain all values of the enumerated type
+      TContact   Normal    : 1; //0 - НР; 1 - НЗ
+D:\Projects\DKS_AT45_LOGGER\App\Source\Tasks\inc\settings.h(125): warning:  #229-D: bit field cannot contain all values of the enumerated type
+        THC        HC            : 1; //Состояние крышки ( 0-закрыта; 1-открыта )                            (на датчике - состояние самой крышки; \
+Source\Tasks\src\button_poll.cpp: 2 warnings, 0 errors
+linking...
+Program Size: Code=49332 RO-data=3168 RW-data=3972 ZI-data=33420  
+FromELF: creating hex file...
+After Build - User command #1: C:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin --output=.\Output\FC01_DEBUG.bin .\Objects\FC01_DEBUG.axf
+".\Objects\FC01_DEBUG.axf" - 0 Error(s), 66 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_DEBUG
+  C:\Keil_v5\ARM\PACK\Keil\STM32L4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:34
+</pre>
+</body>
+</html>

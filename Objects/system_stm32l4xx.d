@@ -1,0 +1,10 @@
+.\objects\system_stm32l4xx.o: Source\Core\src\system_stm32l4xx.c
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\stm32l4xx.h
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\stm32l431xx.h
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\core_cm4.h
+.\objects\system_stm32l4xx.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\core_cmInstr.h
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\cmsis_armcc.h
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\core_cmFunc.h
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\core_cmSimd.h
+.\objects\system_stm32l4xx.o: .\Source\Core\inc\system_stm32l4xx.h

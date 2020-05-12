@@ -1,0 +1,20 @@
+#ifndef __ACCELEROMETER_H
+#define __ACCELEROMETER_H
+
+#include "I2C_driver.h"
+#include "LSM303DLHC_acc_mag_driver.h"
+
+class TAccelerometer final : public TI2C, public LSM303DLHC::TAccMagDriver
+{
+public:
+  TAccelerometer();
+  ~TAccelerometer();
+  
+  void init() __pure; //инициализация всей аппаратной части: интерфейс в микроконтроллере; микросхема
+  
+  const TNum HwIfaceNum = {TNum::ONE}; //номер аппаратного интерфейса, закрепленного за акселерометром
+protected:
+private:
+};
+
+#endif

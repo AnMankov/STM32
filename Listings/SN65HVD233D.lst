@@ -1,0 +1,460 @@
+L 1 "Source\Ext_Dev\src\SN65HVD233D.cpp"
+N#include "SN65HVD233D.h"
+L 1 ".\Source\Ext_Dev\inc\SN65HVD233D.h" 1
+N#ifndef __SN65HVD233D_H
+N#define __SN65HVD233D_H
+N
+N#include <cstdint>
+L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint" 1
+N /*
+N * C++ header for C header stdint.h
+N * Copyright (C) Advanced RISC Machines Limited, 1997. All rights reserved.
+N */
+N
+N/*
+N * RCS $Revision$
+N * Checkin $Date$
+N * Revising $Author$
+N */
+N
+N#ifndef __cstdint
+N#define __cstdint
+N#define __ARMCLIB_VERSION 5060019
+N
+N  #define __STDINT_NO_EXPORTS 1
+N  #include <stdint.h>
+L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+N/* Copyright (C) ARM Ltd., 1999,2014 */
+N/* All rights reserved */
+N
+N/*
+N * RCS $Revision$
+N * Checkin $Date$
+N * Revising $Author: agrant $
+N */
+N
+N#ifndef __stdint_h
+N#define __stdint_h
+N#define __ARMCLIB_VERSION 5060019
+N
+N  #ifdef __INT64_TYPE__
+S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
+S    #define __INT64 __INT64_TYPE__
+N  #else
+N    /* armcc has builtin '__int64' which can be used in --strict mode */
+N    #define __INT64 __int64
+N    #define __INT64_C_SUFFIX__ ll
+N  #endif
+N  #define __PASTE2(x, y) x ## y
+N  #define __PASTE(x, y) __PASTE2(x, y)
+N  #define __INT64_C(x)  __ESCAPE__(__PASTE(x, __INT64_C_SUFFIX__))
+N  #define __UINT64_C(x)  __ESCAPE__(__PASTE(x ## u, __INT64_C_SUFFIX__))
+N  #if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X  #if 0L || (1L && !0L)
+N    /* armclang and non-strict armcc allow 'long long' in system headers */
+N    #define __LONGLONG long long
+N  #else
+S    /* strict armcc has '__int64' */
+S    #define __LONGLONG __int64
+N  #endif
+N
+N  #ifndef __STDINT_DECLS
+N  #define __STDINT_DECLS
+N
+N    #undef __CLIBNS
+N
+N    #ifdef __cplusplus
+N      namespace std {
+N          #define __CLIBNS std::
+N          extern "C" {
+N    #else
+S      #define __CLIBNS
+N    #endif  /* __cplusplus */
+N
+N
+N/*
+N * 'signed' is redundant below, except for 'signed char' and if
+N * the typedef is used to declare a bitfield.
+N */
+N
+N    /* 7.18.1.1 */
+N
+N    /* exact-width signed integer types */
+Ntypedef   signed          char int8_t;
+Ntypedef   signed short     int int16_t;
+Ntypedef   signed           int int32_t;
+Ntypedef   signed       __INT64 int64_t;
+Xtypedef   signed       __int64 int64_t;
+N
+N    /* exact-width unsigned integer types */
+Ntypedef unsigned          char uint8_t;
+Ntypedef unsigned short     int uint16_t;
+Ntypedef unsigned           int uint32_t;
+Ntypedef unsigned       __INT64 uint64_t;
+Xtypedef unsigned       __int64 uint64_t;
+N
+N    /* 7.18.1.2 */
+N
+N    /* smallest type of at least n bits */
+N    /* minimum-width signed integer types */
+Ntypedef   signed          char int_least8_t;
+Ntypedef   signed short     int int_least16_t;
+Ntypedef   signed           int int_least32_t;
+Ntypedef   signed       __INT64 int_least64_t;
+Xtypedef   signed       __int64 int_least64_t;
+N
+N    /* minimum-width unsigned integer types */
+Ntypedef unsigned          char uint_least8_t;
+Ntypedef unsigned short     int uint_least16_t;
+Ntypedef unsigned           int uint_least32_t;
+Ntypedef unsigned       __INT64 uint_least64_t;
+Xtypedef unsigned       __int64 uint_least64_t;
+N
+N    /* 7.18.1.3 */
+N
+N    /* fastest minimum-width signed integer types */
+Ntypedef   signed           int int_fast8_t;
+Ntypedef   signed           int int_fast16_t;
+Ntypedef   signed           int int_fast32_t;
+Ntypedef   signed       __INT64 int_fast64_t;
+Xtypedef   signed       __int64 int_fast64_t;
+N
+N    /* fastest minimum-width unsigned integer types */
+Ntypedef unsigned           int uint_fast8_t;
+Ntypedef unsigned           int uint_fast16_t;
+Ntypedef unsigned           int uint_fast32_t;
+Ntypedef unsigned       __INT64 uint_fast64_t;
+Xtypedef unsigned       __int64 uint_fast64_t;
+N
+N    /* 7.18.1.4 integer types capable of holding object pointers */
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+Stypedef   signed       __INT64 intptr_t;
+Stypedef unsigned       __INT64 uintptr_t;
+N#else
+Ntypedef   signed           int intptr_t;
+Ntypedef unsigned           int uintptr_t;
+N#endif
+N
+N    /* 7.18.1.5 greatest-width integer types */
+Ntypedef   signed     __LONGLONG intmax_t;
+Xtypedef   signed     long long intmax_t;
+Ntypedef unsigned     __LONGLONG uintmax_t;
+Xtypedef unsigned     long long uintmax_t;
+N
+N
+N#if !defined(__cplusplus) || defined(__STDC_LIMIT_MACROS)
+X#if !1L || 0L
+S
+S    /* 7.18.2.1 */
+S
+S    /* minimum values of exact-width signed integer types */
+S#define INT8_MIN                   -128
+S#define INT16_MIN                -32768
+S#define INT32_MIN          (~0x7fffffff)   /* -2147483648 is unsigned */
+S#define INT64_MIN  __INT64_C(~0x7fffffffffffffff) /* -9223372036854775808 is unsigned */
+S
+S    /* maximum values of exact-width signed integer types */
+S#define INT8_MAX                    127
+S#define INT16_MAX                 32767
+S#define INT32_MAX            2147483647
+S#define INT64_MAX  __INT64_C(9223372036854775807)
+S
+S    /* maximum values of exact-width unsigned integer types */
+S#define UINT8_MAX                   255
+S#define UINT16_MAX                65535
+S#define UINT32_MAX           4294967295u
+S#define UINT64_MAX __UINT64_C(18446744073709551615)
+S
+S    /* 7.18.2.2 */
+S
+S    /* minimum values of minimum-width signed integer types */
+S#define INT_LEAST8_MIN                   -128
+S#define INT_LEAST16_MIN                -32768
+S#define INT_LEAST32_MIN          (~0x7fffffff)
+S#define INT_LEAST64_MIN  __INT64_C(~0x7fffffffffffffff)
+S
+S    /* maximum values of minimum-width signed integer types */
+S#define INT_LEAST8_MAX                    127
+S#define INT_LEAST16_MAX                 32767
+S#define INT_LEAST32_MAX            2147483647
+S#define INT_LEAST64_MAX  __INT64_C(9223372036854775807)
+S
+S    /* maximum values of minimum-width unsigned integer types */
+S#define UINT_LEAST8_MAX                   255
+S#define UINT_LEAST16_MAX                65535
+S#define UINT_LEAST32_MAX           4294967295u
+S#define UINT_LEAST64_MAX __UINT64_C(18446744073709551615)
+S
+S    /* 7.18.2.3 */
+S
+S    /* minimum values of fastest minimum-width signed integer types */
+S#define INT_FAST8_MIN           (~0x7fffffff)
+S#define INT_FAST16_MIN          (~0x7fffffff)
+S#define INT_FAST32_MIN          (~0x7fffffff)
+S#define INT_FAST64_MIN  __INT64_C(~0x7fffffffffffffff)
+S
+S    /* maximum values of fastest minimum-width signed integer types */
+S#define INT_FAST8_MAX             2147483647
+S#define INT_FAST16_MAX            2147483647
+S#define INT_FAST32_MAX            2147483647
+S#define INT_FAST64_MAX  __INT64_C(9223372036854775807)
+S
+S    /* maximum values of fastest minimum-width unsigned integer types */
+S#define UINT_FAST8_MAX            4294967295u
+S#define UINT_FAST16_MAX           4294967295u
+S#define UINT_FAST32_MAX           4294967295u
+S#define UINT_FAST64_MAX __UINT64_C(18446744073709551615)
+S
+S    /* 7.18.2.4 */
+S
+S    /* minimum value of pointer-holding signed integer type */
+S#if __sizeof_ptr == 8
+S#define INTPTR_MIN INT64_MIN
+S#else
+S#define INTPTR_MIN INT32_MIN
+S#endif
+S
+S    /* maximum value of pointer-holding signed integer type */
+S#if __sizeof_ptr == 8
+S#define INTPTR_MAX INT64_MAX
+S#else
+S#define INTPTR_MAX INT32_MAX
+S#endif
+S
+S    /* maximum value of pointer-holding unsigned integer type */
+S#if __sizeof_ptr == 8
+S#define UINTPTR_MAX UINT64_MAX
+S#else
+S#define UINTPTR_MAX UINT32_MAX
+S#endif
+S
+S    /* 7.18.2.5 */
+S
+S    /* minimum value of greatest-width signed integer type */
+S#define INTMAX_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+S
+S    /* maximum value of greatest-width signed integer type */
+S#define INTMAX_MAX  __ESCAPE__(9223372036854775807ll)
+S
+S    /* maximum value of greatest-width unsigned integer type */
+S#define UINTMAX_MAX __ESCAPE__(18446744073709551615ull)
+S
+S    /* 7.18.3 */
+S
+S    /* limits of ptrdiff_t */
+S#if __sizeof_ptr == 8
+S#define PTRDIFF_MIN INT64_MIN
+S#define PTRDIFF_MAX INT64_MAX
+S#else
+S#define PTRDIFF_MIN INT32_MIN
+S#define PTRDIFF_MAX INT32_MAX
+S#endif
+S
+S    /* limits of sig_atomic_t */
+S#define SIG_ATOMIC_MIN (~0x7fffffff)
+S#define SIG_ATOMIC_MAX   2147483647
+S
+S    /* limit of size_t */
+S#if __sizeof_ptr == 8
+S#define SIZE_MAX UINT64_MAX
+S#else
+S#define SIZE_MAX UINT32_MAX
+S#endif
+S
+S    /* limits of wchar_t */
+S    /* NB we have to undef and redef because they're defined in both
+S     * stdint.h and wchar.h */
+S#undef WCHAR_MIN
+S#undef WCHAR_MAX
+S
+S#if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+S  #define WCHAR_MIN   0
+S  #define WCHAR_MAX   0xffffffffU
+S#else
+S  #define WCHAR_MIN   0
+S  #define WCHAR_MAX   65535
+S#endif
+S
+S    /* limits of wint_t */
+S#define WINT_MIN (~0x7fffffff)
+S#define WINT_MAX 2147483647
+S
+N#endif /* __STDC_LIMIT_MACROS */
+N
+N#if !defined(__cplusplus) || defined(__STDC_CONSTANT_MACROS)
+X#if !1L || 0L
+S
+S    /* 7.18.4.1 macros for minimum-width integer constants */
+S#define INT8_C(x)   (x)
+S#define INT16_C(x)  (x)
+S#define INT32_C(x)  (x)
+S#define INT64_C(x)  __INT64_C(x)
+S
+S#define UINT8_C(x)  (x ## u)
+S#define UINT16_C(x) (x ## u)
+S#define UINT32_C(x) (x ## u)
+S#define UINT64_C(x) __UINT64_C(x)
+S
+S    /* 7.18.4.2 macros for greatest-width integer constants */
+S#define INTMAX_C(x)  __ESCAPE__(x ## ll)
+S#define UINTMAX_C(x) __ESCAPE__(x ## ull)
+S
+N#endif /* __STDC_CONSTANT_MACROS */
+N
+N    #ifdef __cplusplus
+N         }  /* extern "C" */
+N      }  /* namespace std */
+N    #endif /* __cplusplus */
+N  #endif /* __STDINT_DECLS */
+N
+N  #ifdef __cplusplus
+N    #ifndef __STDINT_NO_EXPORTS
+S      using ::std::int8_t;
+S      using ::std::int16_t;
+S      using ::std::int32_t;
+S      using ::std::int64_t;
+S      using ::std::uint8_t;
+S      using ::std::uint16_t;
+S      using ::std::uint32_t;
+S      using ::std::uint64_t;
+S      using ::std::int_least8_t;
+S      using ::std::int_least16_t;
+S      using ::std::int_least32_t;
+S      using ::std::int_least64_t;
+S      using ::std::uint_least8_t;
+S      using ::std::uint_least16_t;
+S      using ::std::uint_least32_t;
+S      using ::std::uint_least64_t;
+S      using ::std::int_fast8_t;
+S      using ::std::int_fast16_t;
+S      using ::std::int_fast32_t;
+S      using ::std::int_fast64_t;
+S      using ::std::uint_fast8_t;
+S      using ::std::uint_fast16_t;
+S      using ::std::uint_fast32_t;
+S      using ::std::uint_fast64_t;
+S      using ::std::intptr_t;
+S      using ::std::uintptr_t;
+S      using ::std::intmax_t;
+S      using ::std::uintmax_t;
+N    #endif
+N  #endif /* __cplusplus */
+N
+N#undef __INT64
+N#undef __LONGLONG
+N
+N#endif /* __stdint_h */
+N
+N/* end of stdint.h */
+L 18 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint" 2
+N  #undef __STDINT_NO_EXPORTS
+N
+N  
+N  #undef __stdint_h  // later inclusion of stdint.h must do using std::*
+N  #ifdef __EDG_IMPLICIT_USING_STD
+S    /* Implicitly include a using directive for the STD namespace when this
+S       preprocessing flag is TRUE. */
+S       using namespace ::std;
+N  #endif /* ifdef __EDG_IMPLICIT_USING_STD */
+N  
+N#endif /* __cstdint */
+N
+L 5 ".\Source\Ext_Dev\inc\SN65HVD233D.h" 2
+N
+Nnamespace SN65HVD233D
+N{
+N  enum class TMode : std::uint8_t
+N  {
+N    _NORMAL,         // закольцовывание не используется => либо подтянуть к земле, либо установить Z - состояние на входе LBK
+N	  _LOOPBACK        // закольцовывание - все, что передаем на вход драйвера - D, оказывается на выходе драйвера - R. У
+N  };
+N  
+N  enum class TRate : std::uint8_t
+N  {
+N    _HIGH_SPEED,     // Rs подтянут к GND
+N	  _SLOPE_CONTROL,  // между Rs и GND подключен резистор 10кОм..100кОм
+N	  _STANDBY         // Rs подтянут к Vcc - режим прослушки
+N  };
+N  
+N  enum class TPin : std::uint8_t
+N  {
+N    _INPUT,
+N	  _OUTPUT
+N  };
+N  
+N  class TCANPhy
+N  {
+N  public:
+N    TCANPhy();
+N	  ~TCANPhy();
+N	 
+N  protected:
+N	  void set_mode(TMode);
+N	  TMode get_mode();
+N	  
+N	  void set_rate(TRate);
+N	  TRate get_rate();
+N	  
+N	  TPin get_rs_type();
+N	  TPin get_lbk_type();
+N  private:
+N    TMode Mode;   //определяется аппаратно выводом Rs 
+N	  TRate Rate;   //определяется аппаратно выводом LBK
+N	  
+N	  TPin RsType;  //тип вывода Rs микросхемы
+N	  TPin LbkType; //тип вывода LBK микросхемы
+N  };
+N}
+N
+N#endif
+L 2 "Source\Ext_Dev\src\SN65HVD233D.cpp" 2
+N
+Nnamespace SN65HVD233D
+N{
+N  TCANPhy::TCANPhy()
+N  : Mode(TMode::_NORMAL), //_LOOPBACK для отладки
+N    Rate(TRate::_SLOPE_CONTROL),
+N	  RsType(TPin::_INPUT),
+N	  LbkType(TPin::_INPUT)	 
+N  {
+N
+N  }
+N
+N  TCANPhy::~TCANPhy()
+N  {
+N
+N  }
+N
+N  void TCANPhy::set_mode(TMode _Mode)
+N  {
+N    Mode = _Mode;
+N  }
+N
+N  TMode TCANPhy::get_mode()
+N  {
+N    return Mode;
+N  }
+N
+N  void TCANPhy::set_rate(TRate _Rate)
+N  {
+N    Rate = _Rate;
+N  }
+N
+N  TRate TCANPhy::get_rate()
+N  {
+N    return Rate;
+N  }
+N
+N  TPin TCANPhy::get_rs_type()
+N  {
+N    return RsType;
+N  }
+N
+N  TPin TCANPhy::get_lbk_type()
+N  {
+N    return LbkType;
+N  }
+N
+N}
+N

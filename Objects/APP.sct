@@ -1,0 +1,57 @@
+#! armcc -E
+
+#include "../../scatter.h"
+
+;LR_IROM1 BOOT_ROM_START BOOT_ROM_SIZE  {    ; load region size_region
+  ;BOOT_ROM BOOT_ROM_START BOOT_ROM_SIZE  {  ; load address = execution address
+   ;*cpplib* (+RO)
+   ;*(.Boot.lib)
+  ;}
+  ;BOOT_RAM BOOT_RAM_START BOOT_RAM_SIZE  {  ; RW data
+   ;Boot.lib (+RW +ZI)
+  ;}
+;}
+
+LR_IROM1 ROM_START ROM_SIZE      ; load region size_region
+{    
+  APP_ROM ROM_START ROM_SIZE     ; load address = execution address
+  {  
+    *.o (RESET, +First)
+    *(InRoot$$Sections)
+    .ANY (+RO)
+  }
+  REGION_STACK SRAM2_START        ; Stack region growing down
+  {
+    *(STACK)
+  }; We have to define heap region, even if we don't actually use heap
+  REGION_HEAP ImageLimit(REGION_STACK) 
+  {
+    *(HEAP)
+  }
+  APP_RAM RAM_START RAM_SIZE                ; RW data 
+  {  
+    .ANY (+RW +ZI)
+  }
+}
+
+;LR_IROM3 BANK2_ROM_START BANK2_ROM_SIZE  {    ; load region size_region
+  ;BANK2_ROM BANK2_ROM_START BANK2_ROM_SIZE  {  ; load address = execution address
+   ;;*.o (RESET, +First)
+   ;;*(InRoot$$Sections)
+   ;;.ANY (+RO)
+  ;}
+  ;BANK2_RAM BANK2_RAM_START BANK2_RAM_SIZE  {  ; RW data
+   ;;.ANY (+RW +ZI)
+  ;}
+;}
+
+LR_IROM4 SETS_ROM_START SETS_ROM_SIZE       ; load region size_region
+{    
+  SETS_ROM SETS_ROM_START SETS_ROM_SIZE     ; load address = execution address
+  {  
+    ;*.o (RESET, +First)
+    ;*(InRoot$$Sections)
+    .ANY (+RO)
+  }
+}
+

@@ -1,0 +1,2 @@
+move .\Objects\*.hex .\Output
+

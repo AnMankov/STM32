@@ -1,0 +1,12 @@
+#include "AT45DB321D_cmd.h"
+
+
+AT45DB321D_CMD::AT45DB321D_CMD()
+{
+
+}
+
+AT45DB321D_CMD::~AT45DB321D_CMD()
+{
+
+}

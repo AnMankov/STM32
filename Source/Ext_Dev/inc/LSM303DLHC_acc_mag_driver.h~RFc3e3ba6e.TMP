@@ -1,0 +1,58 @@
+#ifndef __LSM303DLHC_ACC_MAG_DRIVER_H
+#define __LSM303DLHC_ACC_MAG_DRIVER_H
+
+#include <vector>
+
+/* Драйвер модуля e-compass LSM303DLHC 
+ * Использованная документация: L3GD20H Datasheet, 21-Apr-2011, Rev 1, Initial release 
+ * Работа с драйвером:
+ *   1. 
+*/
+namespace LSM303DLHC
+{
+  enum TI2CProtocol  //константы - I2C протокол датчика
+  {
+    ST,    //старт условие
+    SADW,  //slave адрес + записать
+    SADR,  //slave адрес + считать
+    SAK,   //подтверждение от slave
+    SUB,   //передача подадреса
+    DATAS, //передача данных от slave
+    DATAM, //передача данных от master
+    SP,    //стоп условие
+    SR,    //повстарт
+    MAK,   //подтверждение от master
+    NMAK,  //нет подтверждения от slave
+    MAX_P
+  };
+  
+  enum I2CModes
+  {
+    STANDARD,                    //до 100кГц
+    FAST,                        //до 400кГц
+  };
+
+  class TAccMagDriver //основной класс драйвера
+  {
+  public:
+    TAccMagDriver();
+    ~TAccMagDriver();
+  protected:
+    const std::vector<TI2CProtocol> ProtocolWrOne; //вектор с протоколом записи одного байта в LSM303DLHC
+    const std::vector<TI2CProtocol> ProtocolWrMul; //вектор с протоколом записи нескольких байтов в LSM303DLHC
+    const std::vector<TI2CProtocol> ProtocolRdOne; //вектор с протоколом считывания одного байта из LSM303DLHC
+    const std::vector<TI2CProtocol> ProtocolRdMul; //вектор с протоколом считывания нескольких байтов из LSM303DLHC
+
+    const unsigned char ACC_ADDR_W; //7-битный slave адрес акселерометра + 1 бит записи
+    const unsigned char ACC_ADDR_R; //7-битный slave адрес акселерометра + 1 бит считывания
+    const unsigned char MAG_ADDR_W; //7-битный slave адрес магнитометра + 1 бит записи
+    const unsigned char MAG_ADDR_R; //7-битный slave адрес магнитометра + 1 бит считывания
+	 
+	 const I2CModes Mode = {FAST}; //режим работы I2C
+  private:
+  };
+}
+
+//extern LSM303DLHC::TAccMagDriver AccMagDriver;
+
+#endif //__LSM303DLHC_ACC_MAG_DRIVER_H
