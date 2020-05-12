@@ -35,7 +35,7 @@
 .\objects\lev_gauge_to_pc.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\lev_gauge_to_pc.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\lev_gauge_to_pc.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\lev_gauge_to_pc.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\lev_gauge_to_pc.o: .\Source\Protocols\inc\CRC16.h
 .\objects\lev_gauge_to_pc.o: .\Source\Protocols\inc\ext_master.h
 .\objects\lev_gauge_to_pc.o: .\Source\Protocols\inc\usart_driver_.h
 .\objects\lev_gauge_to_pc.o: .\Source\Ext_Dev\inc\RS-485_phy.h

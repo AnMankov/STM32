@@ -25,4 +25,4 @@
 .\objects\button.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\button.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\button.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\button.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\button.o: .\Source\Protocols\inc\CRC16.h

@@ -25,7 +25,7 @@
 .\objects\led.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\led.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\led.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\led.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\led.o: .\Source\Protocols\inc\CRC16.h
 .\objects\led.o: .\Source\Main\inc\rtos_headers.h
 .\objects\led.o: .\Source\RTOS\inc\FreeRTOSConfig.h
 .\objects\led.o: .\Source\RTOS\inc\FreeRTOS.h

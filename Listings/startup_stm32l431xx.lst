@@ -100,7 +100,8 @@ ARM Macro Assembler    Page 2
     5 00000000         
     6 00000000         #line   53               "Source\\Core\\src\\startup_stm
 32l431xx.s"
-   53 00000000         #line   1                "..\\..\\Prog\\scatter.h"
+   53 00000000         #line   1                ".\\Source\\Main\\inc\\scatter.
+h"
     1 00000000         
     2 00000000         
     3 00000000         
@@ -127,16 +128,17 @@ ARM Macro Assembler    Page 2
    24 00000000         
    25 00000000         
    26 00000000         
-   27 00000000         
 
 
 
 ARM Macro Assembler    Page 3 
 
 
+   27 00000000         
    28 00000000         
    29 00000000         
-   30 00000000         #line   43               "..\\..\\Prog\\scatter.h"
+   30 00000000         #line   43               ".\\Source\\Main\\inc\\scatter.
+h"
    43 00000000         
    44 00000000         
    45 00000000         
@@ -191,14 +193,14 @@ ARM Macro Assembler    Page 3
    78 00000200         ; Vector Table Mapped to Address 0 at Reset
    79 00000200                 AREA             RESET, DATA, READONLY
    80 00000000         
-   81 00000000                 EXPORT           __Vectors
-   82 00000000                 EXPORT           __Vectors_End
 
 
 
 ARM Macro Assembler    Page 4 
 
 
+   81 00000000                 EXPORT           __Vectors
+   82 00000000                 EXPORT           __Vectors_End
    83 00000000                 EXPORT           __Vectors_Size
    84 00000000         
    85 00000000 00000000 
@@ -256,14 +258,14 @@ ARM Macro Assembler    Page 4
                                                             ; DMA1 Channel 2
   116 00000074 00000000        DCD              DMA1_Channel3_IRQHandler 
                                                             ; DMA1 Channel 3
-  117 00000078 00000000        DCD              DMA1_Channel4_IRQHandler 
-                                                            ; DMA1 Channel 4
 
 
 
 ARM Macro Assembler    Page 5 
 
 
+  117 00000078 00000000        DCD              DMA1_Channel4_IRQHandler 
+                                                            ; DMA1 Channel 4
   118 0000007C 00000000        DCD              DMA1_Channel5_IRQHandler 
                                                             ; DMA1 Channel 5
   119 00000080 00000000        DCD              DMA1_Channel6_IRQHandler 
@@ -321,14 +323,14 @@ ARM Macro Assembler    Page 5
   156 00000114 00000000        DCD              0           ; Reserved
   157 00000118 00000000        DCD              TIM6_DAC_IRQHandler ; TIM6 and 
                                                             DAC1&2 underrun err
-                                                            ors
-  158 0000011C 00000000        DCD              TIM7_IRQHandler ; TIM7
 
 
 
 ARM Macro Assembler    Page 6 
 
 
+                                                            ors
+  158 0000011C 00000000        DCD              TIM7_IRQHandler ; TIM7
   159 00000120 00000000        DCD              DMA2_Channel1_IRQHandler 
                                                             ; DMA2 Channel 1
   160 00000124 00000000        DCD              DMA2_Channel2_IRQHandler 
@@ -386,14 +388,14 @@ ARM Macro Assembler    Page 6
   190 0000018C 0000018C 
                        __Vectors_Size
                                EQU              __Vectors_End - __Vectors
-  191 0000018C         
-  192 0000018C                 AREA             |.text|, CODE, READONLY
 
 
 
 ARM Macro Assembler    Page 7 
 
 
+  191 0000018C         
+  192 0000018C                 AREA             |.text|, CODE, READONLY
   193 00000000         
   194 00000000         ; Reset handler
   195 00000000         Reset_Handler
@@ -451,14 +453,14 @@ K]
   233 00000012                 EXPORT           SVC_Handler                [WEA
 K]
   234 00000012 E7FE            B                .
-  235 00000014                 ENDP
-  236 00000014         DebugMon_Handler
 
 
 
 ARM Macro Assembler    Page 8 
 
 
+  235 00000014                 ENDP
+  236 00000014         DebugMon_Handler
                                PROC
   237 00000014         
   238 00000014                 EXPORT           DebugMon_Handler           [WEA
@@ -516,14 +518,14 @@ K]
   268 0000001A                 EXPORT           DMA1_Channel6_IRQHandler       
    [WEAK]
   269 0000001A                 EXPORT           DMA1_Channel7_IRQHandler       
-   [WEAK]
-  270 0000001A                 EXPORT           ADC1_IRQHandler                
 
 
 
 ARM Macro Assembler    Page 9 
 
 
+   [WEAK]
+  270 0000001A                 EXPORT           ADC1_IRQHandler                
    [WEAK]
   271 0000001A                 EXPORT           CAN1_TX_IRQHandler             
    [WEAK]
@@ -581,14 +583,14 @@ ARM Macro Assembler    Page 9
    [WEAK]
   298 0000001A                 EXPORT           DMA2_Channel3_IRQHandler       
    [WEAK]
-  299 0000001A                 EXPORT           DMA2_Channel4_IRQHandler       
-   [WEAK]
 
 
 
 ARM Macro Assembler    Page 10 
 
 
+  299 0000001A                 EXPORT           DMA2_Channel4_IRQHandler       
+   [WEAK]
   300 0000001A                 EXPORT           DMA2_Channel5_IRQHandler       
    [WEAK]
   301 0000001A                 EXPORT           COMP_IRQHandler                
@@ -646,14 +648,14 @@ ARM Macro Assembler    Page 10
   338 0000001A         CAN1_RX1_IRQHandler
   339 0000001A         CAN1_SCE_IRQHandler
   340 0000001A         EXTI9_5_IRQHandler
-  341 0000001A         TIM1_BRK_TIM15_IRQHandler
-  342 0000001A         TIM1_UP_TIM16_IRQHandler
 
 
 
 ARM Macro Assembler    Page 11 
 
 
+  341 0000001A         TIM1_BRK_TIM15_IRQHandler
+  342 0000001A         TIM1_UP_TIM16_IRQHandler
   343 0000001A         TIM1_TRG_COM_IRQHandler
   344 0000001A         TIM1_CC_IRQHandler
   345 0000001A         TIM2_IRQHandler
@@ -711,14 +713,14 @@ ARM Macro Assembler    Page 11
   395 0000001C                 EXPORT           __heap_limit
   396 0000001C         
   397 0000001C                 ELSE
-  412                          ENDIF
-  413 0000001C         
 
 
 
 ARM Macro Assembler    Page 12 
 
 
+  412                          ENDIF
+  413 0000001C         
   414 0000001C                 END
               00000000 
               00000000 

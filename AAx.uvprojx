@@ -568,7 +568,7 @@
             <File>
               <FileName>Lib.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\Lib\Objects\Lib.lib</FilePath>
+              <FilePath>.\Source\Main\src\Lib.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -644,11 +644,6 @@
           </GroupOption>
           <Files>
             <File>
-              <FileName>usart_driver_.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\Source\Protocols\src\usart_driver_.cpp</FilePath>
-            </File>
-            <File>
               <FileName>Flash_driver.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\Source\MCU_Drivers\src\Flash_driver.cpp</FilePath>
@@ -672,6 +667,11 @@
               <FileName>SPI_dirver.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\Source\MCU_Drivers\src\SPI_dirver.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>usart_driver_.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\Source\MCU_Drivers\src\usart_driver_.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1219,7 +1219,7 @@
               <MiscControls></MiscControls>
               <Define>HSE_VALUE=8000000,USE_FULL_LL_DRIVER, STM32L431xx, DEBUG</Define>
               <Undefine></Undefine>
-              <IncludePath>.\STM32L4 Low Layer drivers\inc;..\Lib\CRC Modbus\inc;.\Source\Core\inc;.\Source\Protocols\inc;.\Source\Ext_Dev\inc;.\Source\Ext_Dev\inc\LSM6DS3;.\Source\Ext_Dev\inc\LSM303DLHC;.\Source\Ext_Dev\inc\MPU-9250;.\Source\Line\inc;.\Source\Main\inc;.\Source\MCU_Drivers\inc;.\Source\MCU_Drivers\inc;.\Source\MotionTL\inc;.\Source\RTOS\inc;.\Source\Tasks\inc;..\Lib\Objects;.\Source\Ext_Dev\inc\AT45</IncludePath>
+              <IncludePath>.\STM32L4 Low Layer drivers\inc;.\Source\Core\inc;.\Source\Protocols\inc;.\Source\Ext_Dev\inc;.\Source\Ext_Dev\inc\LSM6DS3;.\Source\Ext_Dev\inc\LSM303DLHC;.\Source\Ext_Dev\inc\MPU-9250;.\Source\Line\inc;.\Source\Main\inc;.\Source\MCU_Drivers\inc;.\Source\MCU_Drivers\inc;.\Source\MotionTL\inc;.\Source\RTOS\inc;.\Source\Tasks\inc;.\Source\Ext_Dev\inc\AT45;.\Objects</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1450,7 +1450,7 @@
             <File>
               <FileName>Lib.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\Lib\Objects\Lib.lib</FilePath>
+              <FilePath>.\Source\Main\src\Lib.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -1526,11 +1526,6 @@
           </GroupOption>
           <Files>
             <File>
-              <FileName>usart_driver_.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\Source\Protocols\src\usart_driver_.cpp</FilePath>
-            </File>
-            <File>
               <FileName>Flash_driver.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\Source\MCU_Drivers\src\Flash_driver.cpp</FilePath>
@@ -1554,6 +1549,11 @@
               <FileName>SPI_dirver.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\Source\MCU_Drivers\src\SPI_dirver.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>usart_driver_.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\Source\MCU_Drivers\src\usart_driver_.cpp</FilePath>
             </File>
           </Files>
         </Group>

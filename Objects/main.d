@@ -65,7 +65,7 @@
 .\objects\main.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\main.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\main.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\main.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\main.o: .\Source\Protocols\inc\CRC16.h
 .\objects\main.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_hl.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint
 .\objects\main.o: .\Source\MCU_Drivers\inc\I2C_driver.h

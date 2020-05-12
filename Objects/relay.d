@@ -24,7 +24,7 @@
 .\objects\relay.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\relay.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\relay.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\relay.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\relay.o: .\Source\Protocols\inc\CRC16.h
 .\objects\relay.o: .\Source\Main\inc\main.h
 .\objects\relay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\relay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

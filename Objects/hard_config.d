@@ -24,4 +24,4 @@
 .\objects\hard_config.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\hard_config.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\hard_config.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\hard_config.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\hard_config.o: .\Source\Protocols\inc\CRC16.h

@@ -45,7 +45,7 @@
 .\objects\ext_master.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\ext_master.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\ext_master.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\ext_master.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\ext_master.o: .\Source\Protocols\inc\CRC16.h
 .\objects\ext_master.o: .\Source\Main\inc\rtos_headers.h
 .\objects\ext_master.o: .\Source\RTOS\inc\FreeRTOSConfig.h
 .\objects\ext_master.o: .\Source\RTOS\inc\FreeRTOS.h

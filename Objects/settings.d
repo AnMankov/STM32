@@ -32,7 +32,7 @@
 .\objects\settings.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\settings.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\settings.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\settings.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\settings.o: .\Source\Protocols\inc\CRC16.h
 .\objects\settings.o: .\Source\Ext_Dev\inc\MPU-9250\MPU-9250_acc_gyro_mag_driver_hl.h
 .\objects\settings.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdint
 .\objects\settings.o: .\Source\MCU_Drivers\inc\I2C_driver.h

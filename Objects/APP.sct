@@ -1,6 +1,6 @@
 #! armcc -E
 
-#include "../../scatter.h"
+#include "scatter.h"
 
 ;LR_IROM1 BOOT_ROM_START BOOT_ROM_SIZE  {    ; load region size_region
   ;BOOT_ROM BOOT_ROM_START BOOT_ROM_SIZE  {  ; load address = execution address

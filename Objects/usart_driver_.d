@@ -1,4 +1,4 @@
-.\objects\usart_driver_.o: Source\Protocols\src\usart_driver_.cpp
+.\objects\usart_driver_.o: Source\MCU_Drivers\src\usart_driver_.cpp
 .\objects\usart_driver_.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\algorithm
 .\objects\usart_driver_.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\memory
 .\objects\usart_driver_.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\new
@@ -44,7 +44,7 @@
 .\objects\usart_driver_.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_i2c.h
 .\objects\usart_driver_.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_spi.h
 .\objects\usart_driver_.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_adc.h
-.\objects\usart_driver_.o: ..\Lib\CRC Modbus\inc\CRC16.h
+.\objects\usart_driver_.o: .\Source\Protocols\inc\CRC16.h
 .\objects\usart_driver_.o: .\Source\Main\inc\rtos_headers.h
 .\objects\usart_driver_.o: .\Source\RTOS\inc\FreeRTOSConfig.h
 .\objects\usart_driver_.o: .\Source\RTOS\inc\FreeRTOS.h
