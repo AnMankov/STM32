@@ -3547,9 +3547,9 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\Source\Tasks\src\lev_gauge_to_pc.cpp</Name>
-        <ColumnNumber>38</ColumnNumber>
+        <ColumnNumber>5</ColumnNumber>
         <TopLine>202</TopLine>
-        <CurrentLine>579</CurrentLine>
+        <CurrentLine>580</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders>63,68,73,113,131,223,294,361,416,461,478,500,505,510,517,679,688,697,706,715,724,743,783,802,814,825</ContractedFolders>
         <PaneID>0</PaneID>
