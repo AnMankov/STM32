@@ -573,10 +573,10 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     
     for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
     {
-      if ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == true )
-      {
-        Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-      }
+      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
+      
+      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
+      LL_ADC_ClearFlag_EOC( Adc.Nbr );      
     }
     
     //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \

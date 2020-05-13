@@ -77375,10 +77375,10 @@ X    LL_ADC_REG_StartConversion( Adc.Nbr );
 N    
 N    for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
 N    {
-N      if ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == true )
-N      {
-N        Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-N      }
+N      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
+N      
+N      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
+N      LL_ADC_ClearFlag_EOC( Adc.Nbr );      
 N    }
 N    
 N    //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \
