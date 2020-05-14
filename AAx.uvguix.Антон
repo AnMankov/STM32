@@ -3547,11 +3547,11 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\Source\Tasks\src\lev_gauge_to_pc.cpp</Name>
-        <ColumnNumber>44</ColumnNumber>
+        <ColumnNumber>64</ColumnNumber>
         <TopLine>202</TopLine>
-        <CurrentLine>580</CurrentLine>
+        <CurrentLine>578</CurrentLine>
         <Folding>1</Folding>
-        <ContractedFolders>63,68,73,113,131,223,294,361,416,461,478,500,505,510,517,680,689,698,707,716,725,744,784,803,815,826</ContractedFolders>
+        <ContractedFolders>63,68,73,113,131,223,294,361,416,461,478,500,505,510,517,682,691,700,709,718,727,746,786,805,817,828</ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
@@ -3774,7 +3774,7 @@
   </MDIGroups>
 
   <Bookmarks>
-    <ListItem>.\Source\Tasks\src\lev_gauge_to_pc.cpp 648</ListItem>
+    <ListItem>.\Source\Tasks\src\lev_gauge_to_pc.cpp 650</ListItem>
   </Bookmarks>
 
 </ProjectGui>

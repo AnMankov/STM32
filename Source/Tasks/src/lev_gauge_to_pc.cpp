@@ -576,7 +576,9 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
 //      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
       
 //      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-      Data[ Ctr ] = 77;
+      Data[ Ctr ] = ( Ctr % 2 ) ? 77
+                                : 55;
+      
 //      LL_ADC_ClearFlag_EOC( Adc.Nbr );      
     }
     

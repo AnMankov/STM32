@@ -77378,7 +77378,9 @@ N    {
 N//      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
 N      
 N//      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-N      Data[ Ctr ] = 77;
+N      Data[ Ctr ] = ( Ctr % 2 ) ? 77
+N                                : 55;
+N      
 N//      LL_ADC_ClearFlag_EOC( Adc.Nbr );      
 N    }
 N    
@@ -77431,8 +77433,8 @@ N    deinit_diff_exti();
 N    UCG1.on();
 N    
 N    ParamHandle->RxVal = nCap * 4U;
-W "Source\Tasks\src\lev_gauge_to_pc.cpp" 598 22 variable "MAX_N_CAP"  was declared but never referenced
-W "Source\Tasks\src\lev_gauge_to_pc.cpp" 607 15 variable "pTmrCmp"  was declared but never referenced
+W "Source\Tasks\src\lev_gauge_to_pc.cpp" 600 22 variable "MAX_N_CAP"  was declared but never referenced
+W "Source\Tasks\src\lev_gauge_to_pc.cpp" 609 15 variable "pTmrCmp"  was declared but never referenced
 N}
 N
 Nvoid TExchngToPC::rx_diff_capture( TExchngToPC::TParamHandle *ParamHandle )
