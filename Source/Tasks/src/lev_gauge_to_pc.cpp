@@ -524,11 +524,7 @@ void TExchngToPC::rx_set_pos_pot_2( TExchngToPC::TParamHandle *ParamHandle )
 void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
 {
   ParamHandle->RxVal = chk_range( ParamHandle->RxVal, ParamHandle->Range );
-  
-  init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
-  xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
-    deinit_diff_exti();
-  
+    
     UCG1.off(); //на время оцифровки пробросить сигнал с генератора
     
     //оцифровка до получения количества выборок == принятому значению в параметре
@@ -570,6 +566,10 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     LL_ADC_SetDataAlignment( Adc.Nbr, LL_ADC_DATA_ALIGN_RIGHT );         //выравнивание данных   
     LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
                                                                            т.к. был выбран программный триггер, то преобразование запускается немедленно
+    
+    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
+    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
+      deinit_diff_exti();
     
     for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
     {

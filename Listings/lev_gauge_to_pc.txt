@@ -423,182 +423,182 @@
 000014  4620              MOV      r0,r4
 000016  f7fffffe          BL       _ZN11TExchngToPC9chk_rangeEfRKNS_6TRangeE ; TExchngToPC::chk_range(float, const TExchngToPC::TRange&)
 00001a  ed850a01          VSTR     s0,[r5,#4]
-;;;527      
-;;;528      init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
-00001e  6ca0              LDR      r0,[r4,#0x48]
-000020  6e01              LDR      r1,[r0,#0x60]
-000022  4620              MOV      r0,r4
-000024  f7fffffe          BL       _ZN11TExchngToPC14init_diff_extiEj ; TExchngToPC::init_diff_exti(unsigned)
-;;;529      xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
-000028  2300              MOVS     r3,#0
-00002a  1e5a              SUBS     r2,r3,#1
-00002c  4619              MOV      r1,r3
-00002e  486e              LDR      r0,|L6.488|
-000030  6800              LDR      r0,[r0,#0]  ; DiffExti_TrigSem
-000032  f7fffffe          BL       xQueueGenericReceive
-;;;530        deinit_diff_exti();
-000036  4620              MOV      r0,r4
-000038  f7fffffe          BL       _ZN11TExchngToPC16deinit_diff_extiEv ; TExchngToPC::deinit_diff_exti()
-;;;531      
-;;;532        UCG1.off(); //на время оцифровки пробросить сигнал с генератора
-00003c  486b              LDR      r0,|L6.492|
-00003e  f7fffffe          BL       _ZN4TLed3offEv ; TLed::off()
-;;;533        
-;;;534        //оцифровка до получения количества выборок == принятому значению в параметре
-;;;535        en_adc();
-000042  4620              MOV      r0,r4
-000044  f7fffffe          BL       _ZN11TExchngToPC6en_adcEv ; TExchngToPC::en_adc()
-;;;536        
-;;;537        /*
-;;;538        *  Биты управления кроме DIFSEL, ADCAL, ADEN можно записывать только если АЦП включен
-;;;539        */
-;;;540        //выбор общего числа преобразований в регулярной группе
-;;;541        //каждому номеру преобразования можно поставить в соответствие свой номер канала АЦП
-;;;542        //SQR-регистры не должны быть модифицированы когда происходят регулярные преобразования
-;;;543        
-;;;544        //остановить регулярные преобразования - при установке ADSTP текущее продолжающееся преобразование обрывается \
-;;;545          с частичным отбрасыванием результата ( DR регистр не обновляется в текущем преобразовании )
-;;;546        LL_ADC_REG_StopConversion( Adc.Nbr );
-000048  6ca1              LDR      r1,[r4,#0x48]
-00004a  6808              LDR      r0,[r1,#0]
-00004c  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF25LL_ADC_REG_StopConversionEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_StopConversion(ADC_TypeDef*)
-;;;547        do {} while( LL_ADC_REG_IsStopConversionOngoing( Adc.Nbr ) == true );
-000050  bf00              NOP      
-                  |L6.82|
-000052  6ca1              LDR      r1,[r4,#0x48]
-000054  6808              LDR      r0,[r1,#0]
-000056  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF34LL_ADC_REG_IsStopConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsStopConversionOngoing(ADC_TypeDef*)
-00005a  2801              CMP      r0,#1
-00005c  d0f9              BEQ      |L6.82|
-;;;548        do {} while( LL_ADC_REG_IsConversionOngoing( Adc.Nbr ) == true );
+;;;527        
+;;;528        UCG1.off(); //на время оцифровки пробросить сигнал с генератора
+00001e  4872              LDR      r0,|L6.488|
+000020  f7fffffe          BL       _ZN4TLed3offEv ; TLed::off()
+;;;529        
+;;;530        //оцифровка до получения количества выборок == принятому значению в параметре
+;;;531        en_adc();
+000024  4620              MOV      r0,r4
+000026  f7fffffe          BL       _ZN11TExchngToPC6en_adcEv ; TExchngToPC::en_adc()
+;;;532        
+;;;533        /*
+;;;534        *  Биты управления кроме DIFSEL, ADCAL, ADEN можно записывать только если АЦП включен
+;;;535        */
+;;;536        //выбор общего числа преобразований в регулярной группе
+;;;537        //каждому номеру преобразования можно поставить в соответствие свой номер канала АЦП
+;;;538        //SQR-регистры не должны быть модифицированы когда происходят регулярные преобразования
+;;;539        
+;;;540        //остановить регулярные преобразования - при установке ADSTP текущее продолжающееся преобразование обрывается \
+;;;541          с частичным отбрасыванием результата ( DR регистр не обновляется в текущем преобразовании )
+;;;542        LL_ADC_REG_StopConversion( Adc.Nbr );
+00002a  6ca1              LDR      r1,[r4,#0x48]
+00002c  6808              LDR      r0,[r1,#0]
+00002e  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF25LL_ADC_REG_StopConversionEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_StopConversion(ADC_TypeDef*)
+;;;543        do {} while( LL_ADC_REG_IsStopConversionOngoing( Adc.Nbr ) == true );
+000032  bf00              NOP      
+                  |L6.52|
+000034  6ca1              LDR      r1,[r4,#0x48]
+000036  6808              LDR      r0,[r1,#0]
+000038  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF34LL_ADC_REG_IsStopConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsStopConversionOngoing(ADC_TypeDef*)
+00003c  2801              CMP      r0,#1
+00003e  d0f9              BEQ      |L6.52|
+;;;544        do {} while( LL_ADC_REG_IsConversionOngoing( Adc.Nbr ) == true );
+000040  bf00              NOP      
+                  |L6.66|
+000042  6ca1              LDR      r1,[r4,#0x48]
+000044  6808              LDR      r0,[r1,#0]
+000046  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF30LL_ADC_REG_IsConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsConversionOngoing(ADC_TypeDef*)
+00004a  2801              CMP      r0,#1
+00004c  d0f9              BEQ      |L6.66|
+;;;545        
+;;;546        LL_ADC_REG_SetSequencerLength( Adc.Nbr, LL_ADC_REG_SEQ_SCAN_DISABLE );
+00004e  6ca2              LDR      r2,[r4,#0x48]
+000050  2100              MOVS     r1,#0
+000052  6810              LDR      r0,[r2,#0]
+000054  6b02              LDR      r2,[r0,#0x30]
+000056  f022020f          BIC      r2,r2,#0xf
+00005a  430a              ORRS     r2,r2,r1
+00005c  6302              STR      r2,[r0,#0x30]
 00005e  bf00              NOP      
-                  |L6.96|
-000060  6ca1              LDR      r1,[r4,#0x48]
-000062  6808              LDR      r0,[r1,#0]
-000064  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF30LL_ADC_REG_IsConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsConversionOngoing(ADC_TypeDef*)
-000068  2801              CMP      r0,#1
-00006a  d0f9              BEQ      |L6.96|
-;;;549        
-;;;550        LL_ADC_REG_SetSequencerLength( Adc.Nbr, LL_ADC_REG_SEQ_SCAN_DISABLE );
-00006c  6ca2              LDR      r2,[r4,#0x48]
-00006e  2100              MOVS     r1,#0
-000070  6810              LDR      r0,[r2,#0]
-000072  6b02              LDR      r2,[r0,#0x30]
-000074  f022020f          BIC      r2,r2,#0xf
-000078  430a              ORRS     r2,r2,r1
-00007a  6302              STR      r2,[r0,#0x30]
-00007c  bf00              NOP      
-;;;551        LL_ADC_REG_SetSequencerRanks( Adc.Nbr, LL_ADC_REG_RANK_1, Adc.Ch );
-00007e  6ca3              LDR      r3,[r4,#0x48]
-000080  2006              MOVS     r0,#6
-000082  68da              LDR      r2,[r3,#0xc]
-000084  6819              LDR      r1,[r3,#0]
-000086  2600              MOVS     r6,#0
-000088  01c7              LSLS     r7,r0,#7
-00008a  fa97f7a7          RBIT     r7,r7
-00008e  fab7f787          CLZ      r7,r7
-000092  40fe              LSRS     r6,r6,r7
-000094  f1010730          ADD      r7,r1,#0x30
-000098  eb070386          ADD      r3,r7,r6,LSL #2
-00009c  271f              MOVS     r7,#0x1f
-00009e  4087              LSLS     r7,r7,r0
-0000a0  681e              LDR      r6,[r3,#0]
-0000a2  43be              BICS     r6,r6,r7
-0000a4  f3c26784          UBFX     r7,r2,#26,#5
-0000a8  4087              LSLS     r7,r7,r0
-0000aa  433e              ORRS     r6,r6,r7
-0000ac  601e              STR      r6,[r3,#0]
-0000ae  bf00              NOP      
-;;;552        
-;;;553        //перед запуском преобразования АЦП нужно установить непосредственную связь между источником напряжения (на входе АЦП) и \
-;;;554          встроенным конденсатором выборки АЦП. \
-;;;555          это время выборки должно быть достаточным для источника напряжения чтобы зарядить встроенные конденсаторы до \
-;;;556          уровня входного напряжения. \
-;;;557          Internal sample and hold capacitor: Cadc = 5pF ( DS11453 Rev 3 )
-;;;558        //время выборки каждого канала программируется битами SMP в регистре SMPR1.
-;;;559        //вычисление общего времени преобразования : \
-;;;560          Tconv = Sampling time + 12.5 ADC clock cycles
-;;;561        
-;;;562        //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким    
-;;;563        LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, LL_ADC_SAMPLINGTIME_2CYCLES_5 ); //установка времени выборки канала. \
-0000b0  6ca3              LDR      r3,[r4,#0x48]
-0000b2  2200              MOVS     r2,#0
-0000b4  6819              LDR      r1,[r3,#0]
-0000b6  68d8              LDR      r0,[r3,#0xc]
-0000b8  f0007600          AND      r6,r0,#0x2000000
-0000bc  f04f7700          MOV      r7,#0x2000000
-0000c0  fa97f7a7          RBIT     r7,r7
-0000c4  fab7f787          CLZ      r7,r7
-0000c8  40fe              LSRS     r6,r6,r7
-0000ca  f1010714          ADD      r7,r1,#0x14
-0000ce  eb070386          ADD      r3,r7,r6,LSL #2
-0000d2  f00077f8          AND      r7,r0,#0x1f00000
-0000d6  f04f7cf8          MOV      r12,#0x1f00000
-0000da  fa9cfcac          RBIT     r12,r12
-0000de  fabcfc8c          CLZ      r12,r12
-0000e2  fa27f70c          LSR      r7,r7,r12
-0000e6  f04f0c07          MOV      r12,#7
-0000ea  fa0cfc07          LSL      r12,r12,r7
-0000ee  681e              LDR      r6,[r3,#0]
-0000f0  ea26060c          BIC      r6,r6,r12
-0000f4  f00077f8          AND      r7,r0,#0x1f00000
-0000f8  f04f7cf8          MOV      r12,#0x1f00000
-0000fc  fa9cfcac          RBIT     r12,r12
-000100  fabcfc8c          CLZ      r12,r12
-000104  fa27f70c          LSR      r7,r7,r12
-000108  fa02f707          LSL      r7,r2,r7
-00010c  433e              ORRS     r6,r6,r7
-00010e  601e              STR      r6,[r3,#0]
-000110  bf00              NOP      
-;;;564                                                                                           во время выборки биты выбора канала не должны изменяться
-;;;565        LL_ADC_REG_SetContinuousMode( Adc.Nbr, LL_ADC_REG_CONV_CONTINUOUS ); //запрещено включать вместе прерывистый и непрерывный режимы работы
-000112  6ca2              LDR      r2,[r4,#0x48]
-000114  f44f5100          MOV      r1,#0x2000
-000118  6810              LDR      r0,[r2,#0]
-00011a  68c2              LDR      r2,[r0,#0xc]
-00011c  f4225200          BIC      r2,r2,#0x2000
-000120  430a              ORRS     r2,r2,r1
-000122  60c2              STR      r2,[r0,#0xc]
-000124  bf00              NOP      
-;;;566        LL_ADC_REG_SetTriggerSource( Adc.Nbr, LL_ADC_REG_TRIG_SOFTWARE );    //источник запуска группы регулярных преобразований    
-000126  6ca2              LDR      r2,[r4,#0x48]
-000128  2100              MOVS     r1,#0
-00012a  6810              LDR      r0,[r2,#0]
-00012c  68c2              LDR      r2,[r0,#0xc]
-00012e  f422627c          BIC      r2,r2,#0xfc0
-000132  430a              ORRS     r2,r2,r1
-000134  60c2              STR      r2,[r0,#0xc]
-000136  bf00              NOP      
-;;;567        //возможно выполнить более быстрое преобразование снижением разрешения АЦП
-;;;568        LL_ADC_SetResolution( Adc.Nbr, LL_ADC_RESOLUTION_8B );               //время одного преобразования (Fadc=8MHz, RES=8bits) =  1,375us
-000138  6ca2              LDR      r2,[r4,#0x48]
-00013a  2110              MOVS     r1,#0x10
-00013c  6810              LDR      r0,[r2,#0]
-00013e  68c2              LDR      r2,[r0,#0xc]
-000140  f0220218          BIC      r2,r2,#0x18
-000144  430a              ORRS     r2,r2,r1
-000146  60c2              STR      r2,[r0,#0xc]
-000148  bf00              NOP      
+;;;547        LL_ADC_REG_SetSequencerRanks( Adc.Nbr, LL_ADC_REG_RANK_1, Adc.Ch );
+000060  6ca3              LDR      r3,[r4,#0x48]
+000062  2006              MOVS     r0,#6
+000064  68da              LDR      r2,[r3,#0xc]
+000066  6819              LDR      r1,[r3,#0]
+000068  2600              MOVS     r6,#0
+00006a  01c7              LSLS     r7,r0,#7
+00006c  fa97f7a7          RBIT     r7,r7
+000070  fab7f787          CLZ      r7,r7
+000074  40fe              LSRS     r6,r6,r7
+000076  f1010730          ADD      r7,r1,#0x30
+00007a  eb070386          ADD      r3,r7,r6,LSL #2
+00007e  271f              MOVS     r7,#0x1f
+000080  4087              LSLS     r7,r7,r0
+000082  681e              LDR      r6,[r3,#0]
+000084  43be              BICS     r6,r6,r7
+000086  f3c26784          UBFX     r7,r2,#26,#5
+00008a  4087              LSLS     r7,r7,r0
+00008c  433e              ORRS     r6,r6,r7
+00008e  601e              STR      r6,[r3,#0]
+000090  bf00              NOP      
+;;;548        
+;;;549        //перед запуском преобразования АЦП нужно установить непосредственную связь между источником напряжения (на входе АЦП) и \
+;;;550          встроенным конденсатором выборки АЦП. \
+;;;551          это время выборки должно быть достаточным для источника напряжения чтобы зарядить встроенные конденсаторы до \
+;;;552          уровня входного напряжения. \
+;;;553          Internal sample and hold capacitor: Cadc = 5pF ( DS11453 Rev 3 )
+;;;554        //время выборки каждого канала программируется битами SMP в регистре SMPR1.
+;;;555        //вычисление общего времени преобразования : \
+;;;556          Tconv = Sampling time + 12.5 ADC clock cycles
+;;;557        
+;;;558        //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким    
+;;;559        LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, LL_ADC_SAMPLINGTIME_2CYCLES_5 ); //установка времени выборки канала. \
+000092  6ca3              LDR      r3,[r4,#0x48]
+000094  2200              MOVS     r2,#0
+000096  6819              LDR      r1,[r3,#0]
+000098  68d8              LDR      r0,[r3,#0xc]
+00009a  f0007600          AND      r6,r0,#0x2000000
+00009e  f04f7700          MOV      r7,#0x2000000
+0000a2  fa97f7a7          RBIT     r7,r7
+0000a6  fab7f787          CLZ      r7,r7
+0000aa  40fe              LSRS     r6,r6,r7
+0000ac  f1010714          ADD      r7,r1,#0x14
+0000b0  eb070386          ADD      r3,r7,r6,LSL #2
+0000b4  f00077f8          AND      r7,r0,#0x1f00000
+0000b8  f04f7cf8          MOV      r12,#0x1f00000
+0000bc  fa9cfcac          RBIT     r12,r12
+0000c0  fabcfc8c          CLZ      r12,r12
+0000c4  fa27f70c          LSR      r7,r7,r12
+0000c8  f04f0c07          MOV      r12,#7
+0000cc  fa0cfc07          LSL      r12,r12,r7
+0000d0  681e              LDR      r6,[r3,#0]
+0000d2  ea26060c          BIC      r6,r6,r12
+0000d6  f00077f8          AND      r7,r0,#0x1f00000
+0000da  f04f7cf8          MOV      r12,#0x1f00000
+0000de  fa9cfcac          RBIT     r12,r12
+0000e2  fabcfc8c          CLZ      r12,r12
+0000e6  fa27f70c          LSR      r7,r7,r12
+0000ea  fa02f707          LSL      r7,r2,r7
+0000ee  433e              ORRS     r6,r6,r7
+0000f0  601e              STR      r6,[r3,#0]
+0000f2  bf00              NOP      
+;;;560                                                                                           во время выборки биты выбора канала не должны изменяться
+;;;561        LL_ADC_REG_SetContinuousMode( Adc.Nbr, LL_ADC_REG_CONV_CONTINUOUS ); //запрещено включать вместе прерывистый и непрерывный режимы работы
+0000f4  6ca2              LDR      r2,[r4,#0x48]
+0000f6  f44f5100          MOV      r1,#0x2000
+0000fa  6810              LDR      r0,[r2,#0]
+0000fc  68c2              LDR      r2,[r0,#0xc]
+0000fe  f4225200          BIC      r2,r2,#0x2000
+000102  430a              ORRS     r2,r2,r1
+000104  60c2              STR      r2,[r0,#0xc]
+000106  bf00              NOP      
+;;;562        LL_ADC_REG_SetTriggerSource( Adc.Nbr, LL_ADC_REG_TRIG_SOFTWARE );    //источник запуска группы регулярных преобразований    
+000108  6ca2              LDR      r2,[r4,#0x48]
+00010a  2100              MOVS     r1,#0
+00010c  6810              LDR      r0,[r2,#0]
+00010e  68c2              LDR      r2,[r0,#0xc]
+000110  f422627c          BIC      r2,r2,#0xfc0
+000114  430a              ORRS     r2,r2,r1
+000116  60c2              STR      r2,[r0,#0xc]
+000118  bf00              NOP      
+;;;563        //возможно выполнить более быстрое преобразование снижением разрешения АЦП
+;;;564        LL_ADC_SetResolution( Adc.Nbr, LL_ADC_RESOLUTION_8B );               //время одного преобразования (Fadc=8MHz, RES=8bits) =  1,375us
+00011a  6ca2              LDR      r2,[r4,#0x48]
+00011c  2110              MOVS     r1,#0x10
+00011e  6810              LDR      r0,[r2,#0]
+000120  68c2              LDR      r2,[r0,#0xc]
+000122  f0220218          BIC      r2,r2,#0x18
+000126  430a              ORRS     r2,r2,r1
+000128  60c2              STR      r2,[r0,#0xc]
+00012a  bf00              NOP      
+;;;565        
+;;;566        LL_ADC_SetDataAlignment( Adc.Nbr, LL_ADC_DATA_ALIGN_RIGHT );         //выравнивание данных   
+00012c  6ca2              LDR      r2,[r4,#0x48]
+00012e  2100              MOVS     r1,#0
+000130  6810              LDR      r0,[r2,#0]
+000132  68c2              LDR      r2,[r0,#0xc]
+000134  f0220220          BIC      r2,r2,#0x20
+000138  430a              ORRS     r2,r2,r1
+00013a  60c2              STR      r2,[r0,#0xc]
+00013c  bf00              NOP      
+;;;567        LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
+00013e  6ca1              LDR      r1,[r4,#0x48]
+000140  6808              LDR      r0,[r1,#0]
+000142  6881              LDR      r1,[r0,#8]
+000144  4a29              LDR      r2,|L6.492|
+000146  4011              ANDS     r1,r1,r2
+000148  1d09              ADDS     r1,r1,#4
+00014a  6081              STR      r1,[r0,#8]
+00014c  bf00              NOP      
+;;;568                                                                               т.к. был выбран программный триггер, то преобразование запускается немедленно
 ;;;569        
-;;;570        LL_ADC_SetDataAlignment( Adc.Nbr, LL_ADC_DATA_ALIGN_RIGHT );         //выравнивание данных   
-00014a  6ca2              LDR      r2,[r4,#0x48]
-00014c  2100              MOVS     r1,#0
-00014e  6810              LDR      r0,[r2,#0]
-000150  68c2              LDR      r2,[r0,#0xc]
-000152  f0220220          BIC      r2,r2,#0x20
-000156  430a              ORRS     r2,r2,r1
-000158  60c2              STR      r2,[r0,#0xc]
-00015a  bf00              NOP      
-;;;571        LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
-00015c  6ca1              LDR      r1,[r4,#0x48]
-00015e  6808              LDR      r0,[r1,#0]
-000160  6881              LDR      r1,[r0,#8]
-000162  4a23              LDR      r2,|L6.496|
-000164  4011              ANDS     r1,r1,r2
-000166  1d09              ADDS     r1,r1,#4
-000168  6081              STR      r1,[r0,#8]
-00016a  bf00              NOP      
-;;;572                                                                               т.к. был выбран программный триггер, то преобразование запускается немедленно
+;;;570        init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
+00014e  6ca0              LDR      r0,[r4,#0x48]
+000150  6e01              LDR      r1,[r0,#0x60]
+000152  4620              MOV      r0,r4
+000154  f7fffffe          BL       _ZN11TExchngToPC14init_diff_extiEj ; TExchngToPC::init_diff_exti(unsigned)
+;;;571        xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
+000158  2300              MOVS     r3,#0
+00015a  1e5a              SUBS     r2,r3,#1
+00015c  4619              MOV      r1,r3
+00015e  4824              LDR      r0,|L6.496|
+000160  6800              LDR      r0,[r0,#0]  ; DiffExti_TrigSem
+000162  f7fffffe          BL       xQueueGenericReceive
+;;;572          deinit_diff_exti();
+000166  4620              MOV      r0,r4
+000168  f7fffffe          BL       _ZN11TExchngToPC16deinit_diff_extiEv ; TExchngToPC::deinit_diff_exti()
 ;;;573        
 ;;;574        for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
 00016c  2100              MOVS     r1,#0
@@ -671,7 +671,7 @@
 0001da  f7fffffe          BL       _ZN11TExchngToPC7dis_adcEv ; TExchngToPC::dis_adc()
 ;;;591        
 ;;;592        UCG1.on();
-0001de  4803              LDR      r0,|L6.492|
+0001de  4802              LDR      r0,|L6.488|
 0001e0  f7fffffe          BL       _ZN4TLed2onEv ; TLed::on()
 ;;;593    }
 0001e4  e8bd81f0          POP      {r4-r8,pc}
@@ -679,11 +679,11 @@
                           ENDP
 
                   |L6.488|
-                          DCD      DiffExti_TrigSem
-                  |L6.492|
                           DCD      UCG1
-                  |L6.496|
+                  |L6.492|
                           DCD      0x7fffffc0
+                  |L6.496|
+                          DCD      DiffExti_TrigSem
                   |L6.500|
                           DCD      Data
 
@@ -4121,25 +4121,25 @@
                           RELOC 42, ||i._ZN11TExchngToPC7dis_adcEv||
                           DCD      0x00000001
 
-                          AREA ||area_number.107||, LINKORDER=||i._ZN11TExchngToPC6en_adcEv||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
+                          AREA ||area_number.107||, LINKORDER=||i._ZN11TExchngToPC16deinit_diff_extiEv||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
 
                           EXPORTAS ||area_number.107||, ||.ARM.exidx||
-                          DCD      0x00000000
-                          RELOC 42, ||i._ZN11TExchngToPC6en_adcEv||
-                          DCD      0x00000001
-
-                          AREA ||area_number.108||, LINKORDER=||i._ZN11TExchngToPC16deinit_diff_extiEv||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
-
-                          EXPORTAS ||area_number.108||, ||.ARM.exidx||
                           DCD      0x00000000
                           RELOC 42, ||i._ZN11TExchngToPC16deinit_diff_extiEv||
                           DCD      0x00000001
 
-                          AREA ||area_number.109||, LINKORDER=||i._ZN11TExchngToPC14init_diff_extiEj||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
+                          AREA ||area_number.108||, LINKORDER=||i._ZN11TExchngToPC14init_diff_extiEj||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
+
+                          EXPORTAS ||area_number.108||, ||.ARM.exidx||
+                          DCD      0x00000000
+                          RELOC 42, ||i._ZN11TExchngToPC14init_diff_extiEj||
+                          DCD      0x00000001
+
+                          AREA ||area_number.109||, LINKORDER=||i._ZN11TExchngToPC6en_adcEv||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2
 
                           EXPORTAS ||area_number.109||, ||.ARM.exidx||
                           DCD      0x00000000
-                          RELOC 42, ||i._ZN11TExchngToPC14init_diff_extiEj||
+                          RELOC 42, ||i._ZN11TExchngToPC6en_adcEv||
                           DCD      0x00000001
 
                           AREA ||area_number.110||, LINKORDER=||i._ZN11TExchngToPC12rx_start_adcEPNS_12TParamHandleE||, DATA, READONLY, SECTYPE={SHT_ARM_EXIDX}, ALIGN=2

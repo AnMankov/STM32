@@ -77314,12 +77314,7 @@ N
 Nvoid TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
 N{
 N  ParamHandle->RxVal = chk_range( ParamHandle->RxVal, ParamHandle->Range );
-N  
-N  init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
-N  xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
-X  xQueueGenericReceive( ( QueueHandle_t ) ( DiffExti_TrigSem ), 0, ( ( TickType_t ) 0xffffffffUL ), ( ( BaseType_t ) 0 ) );                          
-N    deinit_diff_exti();
-N  
+N    
 N    UCG1.off(); //на время оцифровки пробросить сигнал с генератора
 N    
 N    //оцифровка до получения количества выборок == принятому значению в параметре
@@ -77372,6 +77367,11 @@ X    LL_ADC_SetDataAlignment( Adc.Nbr, (0x00000000U) );
 N    LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
 N                                                                           т.к. был выбран программный триггер, то преобразование запускается немедленно
 X    LL_ADC_REG_StartConversion( Adc.Nbr );                               
+N    
+N    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
+N    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
+X    xQueueGenericReceive( ( QueueHandle_t ) ( DiffExti_TrigSem ), 0, ( ( TickType_t ) 0xffffffffUL ), ( ( BaseType_t ) 0 ) );                          
+N      deinit_diff_exti();
 N    
 N    for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
 N    {
