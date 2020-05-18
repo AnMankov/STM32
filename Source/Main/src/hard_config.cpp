@@ -64,8 +64,8 @@ TUsart_HW UsartExt_HW =
 //    0
 //  },
   {           //Rx
-    GPIOB,
-    LL_GPIO_PIN_7,
+    GPIOA,
+    LL_GPIO_PIN_10,
     LL_AHB2_GRP1_PERIPH_GPIOB,
     LL_AHB2_GRP1_EnableClock,
     0

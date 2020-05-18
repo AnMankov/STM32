@@ -80637,7 +80637,8 @@ Npublic:
 N  TUsart(
 N         const TUsart_HW &_HW,
 N         const TSets &_Sets = DEF_SETS,
-N		     TMode _Mode        = TMode::_STANDARD
+N//		     TMode _Mode        = TMode::_STANDARD
+N		     TMode _Mode        = TMode::_RS485_DE
 N        );
 N  ~TUsart();
 N

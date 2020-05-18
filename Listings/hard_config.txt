@@ -181,8 +181,8 @@
                           DCD      0x00000001
                           DCD      _ZN35_INTERNAL_15_hard_config_cpp_Pot_HW24LL_AHB2_GRP1_EnableClockEj ; [local to hard_config_cpp]::LL_AHB2_GRP1_EnableClock(unsigned)
                           DCD      0x00000000
-                          DCD      0x48000400
-                          DCD      0x00000080
+                          DCD      0x48000000
+                          DCD      0x00000400
                           DCD      0x00000002
                           DCD      _ZN35_INTERNAL_15_hard_config_cpp_Pot_HW24LL_AHB2_GRP1_EnableClockEj ; [local to hard_config_cpp]::LL_AHB2_GRP1_EnableClock(unsigned)
                           DCD      0x00000000

@@ -84,7 +84,8 @@ public:
   TUsart(
          const TUsart_HW &_HW,
          const TSets &_Sets = DEF_SETS,
-		     TMode _Mode        = TMode::_STANDARD
+//		     TMode _Mode        = TMode::_STANDARD
+		     TMode _Mode        = TMode::_RS485_DE
         );
   ~TUsart();
 
