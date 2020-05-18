@@ -425,7 +425,7 @@
 00001a  ed850a01          VSTR     s0,[r5,#4]
 ;;;527        
 ;;;528        UCG1.off(); //на время оцифровки пробросить сигнал с генератора
-00001e  486e              LDR      r0,|L6.472|
+00001e  4872              LDR      r0,|L6.488|
 000020  f7fffffe          BL       _ZN4TLed3offEv ; TLed::off()
 ;;;529        
 ;;;530        //оцифровка до получения количества выборок == принятому значению в параметре
@@ -577,13 +577,13 @@
 00013e  6ca1              LDR      r1,[r4,#0x48]
 000140  6808              LDR      r0,[r1,#0]
 000142  6881              LDR      r1,[r0,#8]
-000144  4a25              LDR      r2,|L6.476|
+000144  4a29              LDR      r2,|L6.492|
 000146  4011              ANDS     r1,r1,r2
 000148  1d09              ADDS     r1,r1,#4
 00014a  6081              STR      r1,[r0,#8]
 00014c  bf00              NOP      
 ;;;568                                                                               т.к. был выбран программный триггер, то преобразование запускается немедленно
-;;;569        
+;;;569    
 ;;;570        init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
 00014e  6ca0              LDR      r0,[r4,#0x48]
 000150  6e01              LDR      r1,[r0,#0x60]
@@ -593,7 +593,7 @@
 000158  2300              MOVS     r3,#0
 00015a  1e5a              SUBS     r2,r3,#1
 00015c  4619              MOV      r1,r3
-00015e  4820              LDR      r0,|L6.480|
+00015e  4824              LDR      r0,|L6.496|
 000160  6800              LDR      r0,[r0,#0]  ; DiffExti_TrigSem
 000162  f7fffffe          BL       xQueueGenericReceive
 ;;;572          deinit_diff_exti();
@@ -601,85 +601,93 @@
 000168  f7fffffe          BL       _ZN11TExchngToPC16deinit_diff_extiEv ; TExchngToPC::deinit_diff_exti()
 ;;;573        
 ;;;574        for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
-00016c  2000              MOVS     r0,#0
-00016e  e00d              B        |L6.396|
-                  |L6.368|
+00016c  2100              MOVS     r1,#0
+00016e  4608              MOV      r0,r1
+000170  e015              B        |L6.414|
+                  |L6.370|
 ;;;575        {
-;;;576    //      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
+;;;576          do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
+000172  bf00              NOP      
+                  |L6.372|
+000174  6ca2              LDR      r2,[r4,#0x48]
+000176  6811              LDR      r1,[r2,#0]
+000178  680a              LDR      r2,[r1,#0]
+00017a  f3c20280          UBFX     r2,r2,#2,#1
+00017e  2a00              CMP      r2,#0
+000180  d0f8              BEQ      |L6.372|
 ;;;577          
-;;;578    //      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-;;;579          Data[ Ctr ] = ( Ctr % 2 ) ? 77
-000170  4601              MOV      r1,r0
-000172  eb0072d1          ADD      r2,r0,r1,LSR #31
-000176  1052              ASRS     r2,r2,#1
-000178  eba00242          SUB      r2,r0,r2,LSL #1
-00017c  b10a              CBZ      r2,|L6.386|
-00017e  224d              MOVS     r2,#0x4d
-000180  e000              B        |L6.388|
-                  |L6.386|
-;;;580                                    : 55;
-000182  2237              MOVS     r2,#0x37
-                  |L6.388|
-000184  4b17              LDR      r3,|L6.484|
-000186  541a              STRB     r2,[r3,r0]
-000188  1c41              ADDS     r1,r0,#1              ;574
-00018a  b288              UXTH     r0,r1                 ;574
-                  |L6.396|
-00018c  edd50a01          VLDR     s1,[r5,#4]            ;574
-000190  ee000a10          VMOV     s0,r0                 ;574
-000194  eeb80a40          VCVT.F32.U32 s0,s0                 ;574
-000198  eef40ac0          VCMPE.F32 s1,s0                 ;574
-00019c  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;574
-0001a0  dce6              BGT      |L6.368|
+;;;578          Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
+000182  6ca2              LDR      r2,[r4,#0x48]
+000184  6811              LDR      r1,[r2,#0]
+000186  6c0a              LDR      r2,[r1,#0x40]
+000188  b2d2              UXTB     r2,r2
+00018a  491a              LDR      r1,|L6.500|
+00018c  540a              STRB     r2,[r1,r0]
+;;;579    //      Data[ Ctr ] = ( Ctr % 2 ) ? 77
+;;;580    //                                : 55;
 ;;;581          
-;;;582    //      LL_ADC_ClearFlag_EOC( Adc.Nbr );      
+;;;582          LL_ADC_ClearFlag_EOC( Adc.Nbr );
+00018e  6ca2              LDR      r2,[r4,#0x48]
+000190  6811              LDR      r1,[r2,#0]
+000192  2204              MOVS     r2,#4
+000194  600a              STR      r2,[r1,#0]
+000196  bf00              NOP      
+000198  1c41              ADDS     r1,r0,#1              ;574
+00019a  b289              UXTH     r1,r1                 ;574
+00019c  4608              MOV      r0,r1                 ;574
+                  |L6.414|
+00019e  edd50a01          VLDR     s1,[r5,#4]            ;574
+0001a2  ee000a10          VMOV     s0,r0                 ;574
+0001a6  eeb80a40          VCVT.F32.U32 s0,s0                 ;574
+0001aa  eef40ac0          VCMPE.F32 s1,s0                 ;574
+0001ae  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;574
+0001b2  dcde              BGT      |L6.370|
 ;;;583        }
 ;;;584        
 ;;;585        //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \
 ;;;586          по завершении процедуры биты ADSTP/ADSTART (для регулярного преобразования) сбрасываются аппаратно и программа \
 ;;;587          должна опрашивать ADSTART пока этот бит не сбросится что даст понять что АЦП полностью остановлен.
 ;;;588        LL_ADC_REG_StopConversion( Adc.Nbr ); 
-0001a2  6ca1              LDR      r1,[r4,#0x48]
-0001a4  6808              LDR      r0,[r1,#0]
-0001a6  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF25LL_ADC_REG_StopConversionEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_StopConversion(ADC_TypeDef*)
+0001b4  6ca1              LDR      r1,[r4,#0x48]
+0001b6  6808              LDR      r0,[r1,#0]
+0001b8  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF25LL_ADC_REG_StopConversionEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_StopConversion(ADC_TypeDef*)
 ;;;589        do {} while ( LL_ADC_REG_IsStopConversionOngoing( Adc.Nbr ) == true ); //опрос ADSTP
-0001aa  bf00              NOP      
-                  |L6.428|
-0001ac  6ca1              LDR      r1,[r4,#0x48]
-0001ae  6808              LDR      r0,[r1,#0]
-0001b0  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF34LL_ADC_REG_IsStopConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsStopConversionOngoing(ADC_TypeDef*)
-0001b4  2801              CMP      r0,#1
-0001b6  d0f9              BEQ      |L6.428|
+0001bc  bf00              NOP      
+                  |L6.446|
+0001be  6ca1              LDR      r1,[r4,#0x48]
+0001c0  6808              LDR      r0,[r1,#0]
+0001c2  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF34LL_ADC_REG_IsStopConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsStopConversionOngoing(ADC_TypeDef*)
+0001c6  2801              CMP      r0,#1
+0001c8  d0f9              BEQ      |L6.446|
 ;;;590        do {} while ( LL_ADC_REG_IsConversionOngoing( Adc.Nbr ) == true );     //опрос ADSTART
-0001b8  bf00              NOP      
-                  |L6.442|
-0001ba  6ca1              LDR      r1,[r4,#0x48]
-0001bc  6808              LDR      r0,[r1,#0]
-0001be  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF30LL_ADC_REG_IsConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsConversionOngoing(ADC_TypeDef*)
-0001c2  2801              CMP      r0,#1
-0001c4  d0f9              BEQ      |L6.442|
+0001ca  bf00              NOP      
+                  |L6.460|
+0001cc  6ca1              LDR      r1,[r4,#0x48]
+0001ce  6808              LDR      r0,[r1,#0]
+0001d0  f7fffffe          BL       _ZN36_INTERNAL_19_lev_gauge_to_pc_cpp_UIF30LL_ADC_REG_IsConversionOngoingEP11ADC_TypeDef ; [local to lev_gauge_to_pc_cpp]::LL_ADC_REG_IsConversionOngoing(ADC_TypeDef*)
+0001d4  2801              CMP      r0,#1
+0001d6  d0f9              BEQ      |L6.460|
 ;;;591        
 ;;;592        
 ;;;593        dis_adc();    
-0001c6  4620              MOV      r0,r4
-0001c8  f7fffffe          BL       _ZN11TExchngToPC7dis_adcEv ; TExchngToPC::dis_adc()
+0001d8  4620              MOV      r0,r4
+0001da  f7fffffe          BL       _ZN11TExchngToPC7dis_adcEv ; TExchngToPC::dis_adc()
 ;;;594        
 ;;;595        UCG1.on();
-0001cc  4802              LDR      r0,|L6.472|
-0001ce  f7fffffe          BL       _ZN4TLed2onEv ; TLed::on()
+0001de  4802              LDR      r0,|L6.488|
+0001e0  f7fffffe          BL       _ZN4TLed2onEv ; TLed::on()
 ;;;596    }
-0001d2  e8bd81f0          POP      {r4-r8,pc}
+0001e4  e8bd81f0          POP      {r4-r8,pc}
 ;;;597    
                           ENDP
 
-0001d6  0000              DCW      0x0000
-                  |L6.472|
+                  |L6.488|
                           DCD      UCG1
-                  |L6.476|
+                  |L6.492|
                           DCD      0x7fffffc0
-                  |L6.480|
+                  |L6.496|
                           DCD      DiffExti_TrigSem
-                  |L6.484|
+                  |L6.500|
                           DCD      Data
 
                           AREA ||i._ZN11TExchngToPC12tmr_cmp_initEv||, CODE, READONLY, ALIGN=1

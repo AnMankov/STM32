@@ -77367,7 +77367,7 @@ X    LL_ADC_SetDataAlignment( Adc.Nbr, (0x00000000U) );
 N    LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
 N                                                                           т.к. был выбран программный триггер, то преобразование запускается немедленно
 X    LL_ADC_REG_StartConversion( Adc.Nbr );                               
-N    
+N
 N    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
 N    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
 X    xQueueGenericReceive( ( QueueHandle_t ) ( DiffExti_TrigSem ), 0, ( ( TickType_t ) 0xffffffffUL ), ( ( BaseType_t ) 0 ) );                          
@@ -77375,13 +77375,13 @@ N      deinit_diff_exti();
 N    
 N    for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
 N    {
-N//      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
+N      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
 N      
-N//      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-N      Data[ Ctr ] = ( Ctr % 2 ) ? 77
-N                                : 55;
+N      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
+N//      Data[ Ctr ] = ( Ctr % 2 ) ? 77
+N//                                : 55;
 N      
-N//      LL_ADC_ClearFlag_EOC( Adc.Nbr );      
+N      LL_ADC_ClearFlag_EOC( Adc.Nbr );
 N    }
 N    
 N    //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \

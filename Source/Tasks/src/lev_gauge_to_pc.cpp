@@ -566,20 +566,20 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     LL_ADC_SetDataAlignment( Adc.Nbr, LL_ADC_DATA_ALIGN_RIGHT );         //выравнивание данных   
     LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
                                                                            т.к. был выбран программный триггер, то преобразование запускается немедленно
-    
+
     init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
     xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
       deinit_diff_exti();
     
     for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
     {
-//      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
+      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
       
-//      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-      Data[ Ctr ] = ( Ctr % 2 ) ? 77
-                                : 55;
+      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
+//      Data[ Ctr ] = ( Ctr % 2 ) ? 77
+//                                : 55;
       
-//      LL_ADC_ClearFlag_EOC( Adc.Nbr );      
+      LL_ADC_ClearFlag_EOC( Adc.Nbr );
     }
     
     //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \
