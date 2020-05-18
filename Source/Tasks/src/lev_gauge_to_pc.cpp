@@ -529,7 +529,7 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     
     //оцифровка до получения количества выборок == принятому значению в параметре
     en_adc();
-    
+    static uint8_t Dif;
     
     /*
     *  Биты управления кроме DIFSEL, ADCAL, ADEN можно записывать только если АЦП включен
