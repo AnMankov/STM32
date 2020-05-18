@@ -1,4 +1,6 @@
 #include <limits>
+#include <stdio.h>
+#include <string.h>
 
 #include "lev_gauge_to_pc.h"
 #include "rtos_headers.h"
@@ -10,6 +12,8 @@ static BaseType_t TmrHigherPriorityTaskWoken;
 static BaseType_t Int1HigherPriorityTaskWoken;
 float TmpParam;
 bool UIF = false;
+uint32_t EOC_1_ctr = 0U;
+uint32_t EOC_0_ctr = 0U;
 
 constexpr uint16_t TX_SIZE = 30000U;
 uint8_t Data[ TX_SIZE ];
@@ -555,7 +559,8 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     //вычисление общего времени преобразования : \
       Tconv = Sampling time + 12.5 ADC clock cycles
     
-    //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким    
+    //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким
+    LL_ADC_REG_SetOverrun( Adc.Nbr, LL_ADC_REG_OVR_DATA_OVERWRITTEN );    
     LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, LL_ADC_SAMPLINGTIME_2CYCLES_5 ); //установка времени выборки канала. \
                                                                                        во время выборки биты выбора канала не должны изменяться
     LL_ADC_REG_SetContinuousMode( Adc.Nbr, LL_ADC_REG_CONV_CONTINUOUS ); //запрещено включать вместе прерывистый и непрерывный режимы работы
@@ -567,20 +572,31 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
                                                                            т.к. был выбран программный триггер, то преобразование запускается немедленно
 
-    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
-    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
-      deinit_diff_exti();
+//    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
+//    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
+//      deinit_diff_exti();
+    
+    memset( Data, 0U, sizeof Data );
     
     for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
     {
       do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
       
       Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-//      Data[ Ctr ] = ( Ctr % 2 ) ? 77
-//                                : 55;
+      
       
       LL_ADC_ClearFlag_EOC( Adc.Nbr );
+      
+      if ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == true )
+      {
+        ++EOC_1_ctr;
+      }
+      else
+      {
+        ++EOC_0_ctr;
+      }
     }
+    
     
     //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \
       по завершении процедуры биты ADSTP/ADSTART (для регулярного преобразования) сбрасываются аппаратно и программа \

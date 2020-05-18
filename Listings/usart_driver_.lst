@@ -80820,7 +80820,7 @@ N             case ( TConfigurable::_FULL_DUPLEX ):
 N    	      	    break;
 N             default:
 N                  break;
-N           }     
+N           }
 N  	       break;
 N  	  case TMode::_STANDARD:
 N           set_232(Fck, OvS);
@@ -80913,7 +80913,7 @@ N
 N  }
 N  else //если не совпадают
 N  {
-N    dis_if();  
+N    dis_if();
 N    Sets = _Sets;
 N    hw_init( 17U );
 N  }
@@ -80938,7 +80938,7 @@ N    clr_error_flags();
 N    do {} while ( LL_USART_IsActiveFlag_RXNE( HW.If ) == false );  //блокировка пока байт не принят
 N                                                                   
 N    DataBurst[ Ctr ] = LL_USART_ReceiveData8( HW.If );             //флаг RXNE сбрасывается при считывании байта
-N  }  
+N  }
 N}
 N
 Nvoid TUsart::write_burst( const uint8_t *DataBurst, uint16_t Size ) //многобайтная запись

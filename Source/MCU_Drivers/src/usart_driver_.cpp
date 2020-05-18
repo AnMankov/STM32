@@ -131,7 +131,7 @@ void TUsart::hw_init( uint8_t TimeoutBitsQty )
     	      	    break;
              default:
                   break;
-           }     
+           }
   	       break;
   	  case TMode::_STANDARD:
            set_232(Fck, OvS);
@@ -222,7 +222,7 @@ void TUsart::set_sets( const TSets &_Sets )
   }
   else //если не совпадают
   {
-    dis_if();  
+    dis_if();
     Sets = _Sets;
     hw_init( 17U );
   }
@@ -247,7 +247,7 @@ void TUsart::read_burst( uint8_t *DataBurst, uint8_t Size )        //много�
     do {} while ( LL_USART_IsActiveFlag_RXNE( HW.If ) == false );  //блокировка пока байт не принят
                                                                    
     DataBurst[ Ctr ] = LL_USART_ReceiveData8( HW.If );             //флаг RXNE сбрасывается при считывании байта
-  }  
+  }
 }
 
 void TUsart::write_burst( const uint8_t *DataBurst, uint16_t Size ) //многобайтная запись
