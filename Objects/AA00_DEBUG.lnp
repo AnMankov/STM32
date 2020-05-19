@@ -26,6 +26,6 @@
 ".\objects\startup_stm32l431xx.o"
 ".\objects\system_stm32l4xx.o"
 --library_type=microlib --strict --scatter ".\Objects\APP.sct"
---predefine="-DDEBUG" --scatter=.\Objects\APP.sct --diag_suppress=L6989W --info=summarystack --info=totals --map --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--predefine="-DDEBUG" --scatter=.\Objects\APP.sct --diag_suppress=L6989W --info=summarystack --info=totals --map --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\Listings\AA00_DEBUG.map" -o .\Objects\AA00_DEBUG.axf

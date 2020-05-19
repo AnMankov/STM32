@@ -399,7 +399,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -419,7 +419,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -942,7 +942,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -1000,7 +1000,7 @@ N#define __CMSIS_ARMCC_H
 N
 N
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
-X#if 1L && (5060528 < 400677)
+X#if 1L && (5060422 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -1483,7 +1483,7 @@ N  \param [in]    ptr  Pointer to data
 N  \return             value of type uint8_t at (*ptr)
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __LDREXB(ptr)                                                        ((uint8_t ) __ldrex(ptr))
 N#else
 N  #define __LDREXB(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint8_t ) __ldrex(ptr))  _Pragma("pop")
@@ -1497,7 +1497,7 @@ N  \param [in]    ptr  Pointer to data
 N  \return        value of type uint16_t at (*ptr)
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __LDREXH(ptr)                                                        ((uint16_t) __ldrex(ptr))
 N#else
 N  #define __LDREXH(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint16_t) __ldrex(ptr))  _Pragma("pop")
@@ -1511,7 +1511,7 @@ N  \param [in]    ptr  Pointer to data
 N  \return        value of type uint32_t at (*ptr)
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __LDREXW(ptr)                                                        ((uint32_t ) __ldrex(ptr))
 N#else
 N  #define __LDREXW(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint32_t ) __ldrex(ptr))  _Pragma("pop")
@@ -1527,7 +1527,7 @@ N  \return          0  Function succeeded
 N  \return          1  Function failed
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __STREXB(value, ptr)                                                 __strex(value, ptr)
 N#else
 N  #define __STREXB(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
@@ -1543,7 +1543,7 @@ N  \return          0  Function succeeded
 N  \return          1  Function failed
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __STREXH(value, ptr)                                                 __strex(value, ptr)
 N#else
 N  #define __STREXH(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
@@ -1559,7 +1559,7 @@ N  \return          0  Function succeeded
 N  \return          1  Function failed
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __STREXW(value, ptr)                                                 __strex(value, ptr)
 N#else
 N  #define __STREXW(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
@@ -1830,7 +1830,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -1923,7 +1923,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -60778,7 +60778,7 @@ N */
 N
 N#ifndef __bool_true_false_are_defined
 N#define __bool_true_false_are_defined 1
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N  #ifndef __cplusplus /* In C++, 'bool', 'true' and 'false' and keywords */
 S    #define bool _Bool
@@ -60813,7 +60813,7 @@ N */
 N
 N#ifndef __stdlib_h
 N#define __stdlib_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
 X#if 0L || (1L && !0L)
@@ -61796,7 +61796,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -62919,7 +62919,7 @@ N */
 N
 N#ifndef __math_h
 N#define __math_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
 X#if 0L || (1L && !0L)

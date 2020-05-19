@@ -1506,7 +1506,7 @@ N */
 N
 N#ifndef __cmath
 N#define __cmath
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N  #define __MATH_NO_EXPORTS 1
 N  #include <math.h>
@@ -1538,7 +1538,7 @@ N */
 N
 N#ifndef __math_h
 N#define __math_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
 X#if 0L || (1L && !0L)
@@ -3162,7 +3162,7 @@ N */
 N
 N#ifndef __cfloat
 N#define __cfloat
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N  #define __FLOAT_NO_EXPORTS 1
 N  #include <float.h>
@@ -3180,7 +3180,7 @@ N */
 N
 N#ifndef __float_h
 N#define __float_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N  #ifndef __FLOAT_DECLS
 N  #define __FLOAT_DECLS
@@ -3382,7 +3382,7 @@ N */
 N
 N#ifndef __climits
 N#define __climits
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N#include <limits.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\limits.h" 1
@@ -3398,7 +3398,7 @@ N */
 N
 N#ifndef __limits_h
 N#define __limits_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N#define CHAR_BIT 8
 N    /* max number of bits for smallest object that is not a bit-field (byte) */
@@ -4705,7 +4705,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -4725,7 +4725,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -5248,7 +5248,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -5306,7 +5306,7 @@ N#define __CMSIS_ARMCC_H
 N
 N
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
-X#if 1L && (5060528 < 400677)
+X#if 1L && (5060422 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -5789,7 +5789,7 @@ N  \param [in]    ptr  Pointer to data
 N  \return             value of type uint8_t at (*ptr)
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __LDREXB(ptr)                                                        ((uint8_t ) __ldrex(ptr))
 N#else
 N  #define __LDREXB(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint8_t ) __ldrex(ptr))  _Pragma("pop")
@@ -5803,7 +5803,7 @@ N  \param [in]    ptr  Pointer to data
 N  \return        value of type uint16_t at (*ptr)
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __LDREXH(ptr)                                                        ((uint16_t) __ldrex(ptr))
 N#else
 N  #define __LDREXH(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint16_t) __ldrex(ptr))  _Pragma("pop")
@@ -5817,7 +5817,7 @@ N  \param [in]    ptr  Pointer to data
 N  \return        value of type uint32_t at (*ptr)
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __LDREXW(ptr)                                                        ((uint32_t ) __ldrex(ptr))
 N#else
 N  #define __LDREXW(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint32_t ) __ldrex(ptr))  _Pragma("pop")
@@ -5833,7 +5833,7 @@ N  \return          0  Function succeeded
 N  \return          1  Function failed
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __STREXB(value, ptr)                                                 __strex(value, ptr)
 N#else
 N  #define __STREXB(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
@@ -5849,7 +5849,7 @@ N  \return          0  Function succeeded
 N  \return          1  Function failed
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __STREXH(value, ptr)                                                 __strex(value, ptr)
 N#else
 N  #define __STREXH(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
@@ -5865,7 +5865,7 @@ N  \return          0  Function succeeded
 N  \return          1  Function failed
 N */
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
-X#if 1L && (5060528 < 5060020)
+X#if 1L && (5060422 < 5060020)
 S  #define __STREXW(value, ptr)                                                 __strex(value, ptr)
 N#else
 N  #define __STREXW(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
@@ -6136,7 +6136,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -6229,7 +6229,7 @@ N#if   defined ( __ICCARM__ )
 X#if   0L
 S #pragma system_include         /* treat file as system include file for MISRA check */
 S#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-X#elif 1L && (5060528 >= 6010050)
+X#elif 1L && (5060422 >= 6010050)
 S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
@@ -65536,7 +65536,7 @@ N */
 N
 N#ifndef __stddef_h
 N#define __stddef_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060019
 N
 N  #ifndef __STDDEF_DECLS
 N  #define __STDDEF_DECLS
@@ -77317,6 +77317,11 @@ N  ParamHandle->RxVal = chk_range( ParamHandle->RxVal, ParamHandle->Range );
 N    
 N    UCG1.off(); //на время оцифровки пробросить сигнал с генератора
 N    
+N    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
+N    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
+X    xQueueGenericReceive( ( QueueHandle_t ) ( DiffExti_TrigSem ), 0, ( ( TickType_t ) 0xffffffffUL ), ( ( BaseType_t ) 0 ) );                          
+N      deinit_diff_exti();
+N    
 N    //оцифровка до получения количества выборок == принятому значению в параметре
 N    en_adc();
 N    
@@ -77350,7 +77355,9 @@ N    //вычисление общего времени преобразован
 N      Tconv = Sampling time + 12.5 ADC clock cycles
 X    
 N    
-N    //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким    
+N    //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким
+N    LL_ADC_REG_SetOverrun( Adc.Nbr, LL_ADC_REG_OVR_DATA_OVERWRITTEN );
+X    LL_ADC_REG_SetOverrun( Adc.Nbr, ((0x1UL << (12U))) );
 N    LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, LL_ADC_SAMPLINGTIME_2CYCLES_5 ); //установка времени выборки канала. \
 N                                                                                       во время выборки биты выбора канала не должны изменяться
 X    LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, (0x00000000U) ); 
@@ -77367,11 +77374,6 @@ X    LL_ADC_SetDataAlignment( Adc.Nbr, (0x00000000U) );
 N    LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
 N                                                                           т.к. был выбран программный триггер, то преобразование запускается немедленно
 X    LL_ADC_REG_StartConversion( Adc.Nbr );                               
-N
-N    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
-N    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
-X    xQueueGenericReceive( ( QueueHandle_t ) ( DiffExti_TrigSem ), 0, ( ( TickType_t ) 0xffffffffUL ), ( ( BaseType_t ) 0 ) );                          
-N      deinit_diff_exti();
 N    
 N    for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
 N    {
@@ -77381,7 +77383,7 @@ N      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
 N//      Data[ Ctr ] = ( Ctr % 2 ) ? 77
 N//                                : 55;
 N      
-N      LL_ADC_ClearFlag_EOC( Adc.Nbr );
+N//      LL_ADC_ClearFlag_EOC( Adc.Nbr );
 N    }
 N    
 N    //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \
@@ -77433,8 +77435,8 @@ N    deinit_diff_exti();
 N    UCG1.on();
 N    
 N    ParamHandle->RxVal = nCap * 4U;
-W "Source\Tasks\src\lev_gauge_to_pc.cpp" 600 22 variable "MAX_N_CAP"  was declared but never referenced
-W "Source\Tasks\src\lev_gauge_to_pc.cpp" 609 15 variable "pTmrCmp"  was declared but never referenced
+W "Source\Tasks\src\lev_gauge_to_pc.cpp" 601 22 variable "MAX_N_CAP"  was declared but never referenced
+W "Source\Tasks\src\lev_gauge_to_pc.cpp" 610 15 variable "pTmrCmp"  was declared but never referenced
 N}
 N
 Nvoid TExchngToPC::rx_diff_capture( TExchngToPC::TParamHandle *ParamHandle )
@@ -77693,7 +77695,7 @@ N      if ( item.ParamHandle->Cmd == Data.Cmd )
 N      {
 N        if ( item.rxHandler != nullptr )
 N        {
-N           item.ParamHandle->RxVal = Data.ParamVal;
+N          item.ParamHandle->RxVal = Data.ParamVal;
 N          ( ExchngToPC.*item.rxHandler )( item.ParamHandle );
 N        }
 N        

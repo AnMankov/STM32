@@ -527,6 +527,10 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     
     UCG1.off(); //на время оцифровки пробросить сигнал с генератора
     
+    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
+    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
+      deinit_diff_exti();
+    
     //оцифровка до получения количества выборок == принятому значению в параметре
     en_adc();
     
@@ -555,7 +559,8 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     //вычисление общего времени преобразования : \
       Tconv = Sampling time + 12.5 ADC clock cycles
     
-    //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким    
+    //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким
+    LL_ADC_REG_SetOverrun( Adc.Nbr, LL_ADC_REG_OVR_DATA_OVERWRITTEN );
     LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, LL_ADC_SAMPLINGTIME_2CYCLES_5 ); //установка времени выборки канала. \
                                                                                        во время выборки биты выбора канала не должны изменяться
     LL_ADC_REG_SetContinuousMode( Adc.Nbr, LL_ADC_REG_CONV_CONTINUOUS ); //запрещено включать вместе прерывистый и непрерывный режимы работы
@@ -566,10 +571,6 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
     LL_ADC_SetDataAlignment( Adc.Nbr, LL_ADC_DATA_ALIGN_RIGHT );         //выравнивание данных   
     LL_ADC_REG_StartConversion( Adc.Nbr );                               //запуск группы регулярных преобразований АЦП \
                                                                            т.к. был выбран программный триггер, то преобразование запускается немедленно
-
-    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
-    xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
-      deinit_diff_exti();
     
     for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
     {
@@ -579,7 +580,7 @@ void TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
 //      Data[ Ctr ] = ( Ctr % 2 ) ? 77
 //                                : 55;
       
-      LL_ADC_ClearFlag_EOC( Adc.Nbr );
+//      LL_ADC_ClearFlag_EOC( Adc.Nbr );
     }
     
     //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \
@@ -885,7 +886,7 @@ void lev_gauge_to_pc( void *Params ) //обмен уровнемера с ПК
       {
         if ( item.rxHandler != nullptr )
         {
-           item.ParamHandle->RxVal = Data.ParamVal;
+          item.ParamHandle->RxVal = Data.ParamVal;
           ( ExchngToPC.*item.rxHandler )( item.ParamHandle );
         }
         

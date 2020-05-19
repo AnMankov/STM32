@@ -727,7 +727,7 @@ Command Line: --debug --xref --cpreproc --diag_suppress=9931 --cpu=Cortex-M4.fp
 stm32l431xx.o -I.\Source\Main\inc -I..\..\DKS_Multiproject -I.\Objects -I..\..\
 Prog -I.\RTE\_DEBUG -IC:\Keil_v5\ARM\PACK\Keil\STM32L4xx_DFP\2.2.0\Drivers\CMSI
 S\Device\ST\STM32L4xx\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MIC
-ROLIB SETA 1" --predefine="__UVISION_VERSION SETA 524" --predefine="STM32L431xx
+ROLIB SETA 1" --predefine="__UVISION_VERSION SETA 523" --predefine="STM32L431xx
  SETA 1" --cpreproc_opts=-D__PROG_VERSION=0xAA000000 --list=.\listings\startup_
 stm32l431xx.lst Source\Core\src\startup_stm32l431xx.s
 
