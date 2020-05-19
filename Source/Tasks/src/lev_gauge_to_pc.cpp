@@ -1,4 +1,6 @@
 #include <limits>
+#include <stdio.h>
+#include <string.h>
 
 #include "lev_gauge_to_pc.h"
 #include "rtos_headers.h"
@@ -18,6 +20,8 @@ constexpr uint16_t TX_SIZE = 30000U;
 //constexpr uint16_t TX_SIZE = 30U;
 uint8_t Data[ TX_SIZE ];
 uint16_t nCapDiff = 0U;              //текущее количество захваченных значений
+
+uint32_t TIM2_CC2_ctr = 0U;
 
 //----- временные переменные для отладки ----------------------------------------------------------------
 //----- //временные переменные для отладки --------------------------------------------------------------
@@ -39,7 +43,7 @@ TExchngToPC::TParamHandle ParamHandle[] =
   { PC_CMD::SET_POS_POT_2,   0.f,  {     0.f,   255.f }, { (uint8_t *)&ExchngToPC.Tx_PosPot_2,     sizeof(ExchngToPC.Tx_PosPot_2)     } }, //SET_POS_POT_2
   { PC_CMD::TEST,            0.f,  { FLT_MIN, FLT_MAX }, { (uint8_t *)&ExchngToPC.Tx_Test,         sizeof(ExchngToPC.Tx_Test)         } }, //TEST
   { PC_CMD::START_ADC,       0.f,  {     1.f, 30000.f }, { (uint8_t *)Data,                        0U                                 } }, //START_ADC
-  { PC_CMD::CMP_CAPTURE,     0.f,  { FLT_MIN, FLT_MAX }, { (uint8_t *)&ExchngToPC.Tx_Test,         sizeof(ExchngToPC.Tx_Test)         } }, //CMP_CAPTURE
+  { PC_CMD::CMP_CAPTURE,     0.f,  { FLT_MIN, FLT_MAX }, { (uint8_t *)Data,                        sizeof(ExchngToPC.Tx_Test)         } }, //CMP_CAPTURE
   { PC_CMD::DIFF_CAPTURE,    0.f,  {     1.f, 65536.f }, { (uint8_t *)&ExchngToPC.Tx_Test,         sizeof(ExchngToPC.Tx_Test)         } }, //DIFF_CAPTURE
 };
 
@@ -732,30 +736,40 @@ void TExchngToPC::rx_cmp_capture( TExchngToPC::TParamHandle *ParamHandle )
   xSemaphoreTake( DiffExti_TrigSem, portMAX_DELAY );                          //ожидание заднего фронта на DIFF
     deinit_diff_exti();
     UCG1.off();                                                               //на время захвата пробросить сигнал с генератора     
-//    init_diff_exti( LL_EXTI_TRIGGER_RISING );                                 //инициализация вывода DIFF, предназначенного для прекращения захвата
+    init_diff_exti( LL_EXTI_TRIGGER_RISING );                                 //инициализация вывода DIFF, предназначенного для прекращения захвата
     
     uint32_t *pTmrCmp = reinterpret_cast< uint32_t * >( Data );
     
     LL_TIM_SetCounter( TmrCmp.Nbr, 0U );
     LL_TIM_EnableCounter( TmrCmp.Nbr );
     LL_TIM_EnableAllOutputs( TmrCmp.Nbr );
-//    do
-//    {
-//      if ( LL_TIM_IsActiveFlag_CC2( TmrCmp.Nbr ) == true )
-//      {
-//        pTmrCmp[ nCap++ ] = LL_TIM_IC_GetCaptureCH2( TmrCmp.Nbr );
-//      }
-//    } while (
-//             nCap < MAX_N_CAP
-//             &&
-//             xSemaphoreTake( DiffExti_TrigSem, 0U ) == pdFAIL
-//            );
+    do
+    {
+      if ( LL_TIM_IsActiveFlag_CC2( TmrCmp.Nbr ) == true )
+      {
+        pTmrCmp[ nCap++ ] = LL_TIM_IC_GetCaptureCH2( TmrCmp.Nbr );
+        
+        if ( LL_TIM_IsActiveFlag_CC2( TmrCmp.Nbr ) == true )
+        {
+          ++TIM2_CC2_ctr;
+        }
+        
+        
+        
+      }
+    } while (
+             nCap < MAX_N_CAP
+             &&
+             xSemaphoreTake( DiffExti_TrigSem, 0U ) == pdFAIL
+            );
 
     LL_TIM_DisableCounter( TmrCmp.Nbr );
     deinit_diff_exti();
     UCG1.on();
-    
-    ParamHandle->RxVal = nCap * 4U;
+
+    uint16_t EmptyNbr = 4000 - nCap * 4U;
+    memset( ( (uint8_t *)Data ) + nCap * 4U, 0U, EmptyNbr );
+    ParamHandle->RxVal = 4000;
 }
 
 void TExchngToPC::rx_diff_capture( TExchngToPC::TParamHandle *ParamHandle )

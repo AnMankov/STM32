@@ -10,6 +10,8 @@
 .\objects\lev_gauge_to_pc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\float.h
 .\objects\lev_gauge_to_pc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\climits
 .\objects\lev_gauge_to_pc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\limits.h
+.\objects\lev_gauge_to_pc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\lev_gauge_to_pc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\lev_gauge_to_pc.o: .\Source\Tasks\inc\lev_gauge_to_pc.h
 .\objects\lev_gauge_to_pc.o: .\Source\Main\inc\lib.h
 .\objects\lev_gauge_to_pc.o: .\STM32L4 Low Layer drivers\inc\stm32l4xx_ll_usart.h

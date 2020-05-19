@@ -294,7 +294,24 @@
           <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32L4xx_256 -FS08000000 -FL040000 -FP0($$Device:STM32L431CCTx$CMSIS\Flash\STM32L4xx_256.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>746</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134224862</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>D:\Projects\TDR-СѓСЂРѕРІРЅРµРјРµСЂ\Test\STM32\Source\Tasks\src\lev_gauge_to_pc.cpp</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\AA00_DEBUG\Source/Tasks/src/lev_gauge_to_pc.cpp\746</Expression>
+        </Bp>
+      </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -407,6 +424,10 @@
         <Entry>
           <Name>System Viewer\ADC1</Name>
           <WinId>35905</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\DMA1</Name>
+          <WinId>35900</WinId>
         </Entry>
         <Entry>
           <Name>System Viewer\GPIOA</Name>
