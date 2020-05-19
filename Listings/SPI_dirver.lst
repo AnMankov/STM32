@@ -60930,6 +60930,8 @@ L 1 ".\Source\MCU_Drivers\inc\dma_types.h" 1
 N#ifndef __DMA_TYPES_H
 N#define __DMA_TYPES_H
 N
+N#include "lib.h"
+N
 Nstruct TChannelSets
 N{
 N  uint32_t PeriphAddr;
@@ -60945,8 +60947,8 @@ N  uint32_t  Nbr;
 N  IRQn_Type IRQ;
 N};
 N
-Ntypedef void (*TFnct)(uint32_t);
-Ntypedef void (*TClrFlagFnct)(DMA_TypeDef *);
+Ntypedef void ( *TFnct )( uint32_t );
+Ntypedef void ( *TClrFlagFnct )( DMA_TypeDef * );
 N
 Nstruct TPeriph
 N{
@@ -60963,11 +60965,17 @@ N  uint32_t     TxChannel;
 N  bool         Flag;
 N};
 N
-Nstruct TDma
+Nstruct TDmaDuplex
 N{
 N  TPeriph  Periph;
 N	TChannel RxChannel;
 N	TChannel TxChannel;
+N};
+N
+Nstruct TDmaAdc
+N{
+N  TPeriph  Periph;
+N  TChannel Ch;
 N};
 N
 N#endif //__DMA_TYPES_H
@@ -61142,7 +61150,7 @@ N{
 N  struct TSpiDma
 N  {
 N    SPI_TypeDef *If;
-N    TDma         Dma;
+N    TDmaDuplex   Dma;
 N  };
 N  
 N  TSpiDma SpiDma[] =

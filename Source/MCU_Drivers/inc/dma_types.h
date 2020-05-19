@@ -1,6 +1,8 @@
 #ifndef __DMA_TYPES_H
 #define __DMA_TYPES_H
 
+#include "lib.h"
+
 struct TChannelSets
 {
   uint32_t PeriphAddr;
@@ -16,8 +18,8 @@ struct TChannel
   IRQn_Type IRQ;
 };
 
-typedef void (*TFnct)(uint32_t);
-typedef void (*TClrFlagFnct)(DMA_TypeDef *);
+typedef void ( *TFnct )( uint32_t );
+typedef void ( *TClrFlagFnct )( DMA_TypeDef * );
 
 struct TPeriph
 {
@@ -34,11 +36,17 @@ struct TEof
   bool         Flag;
 };
 
-struct TDma
+struct TDmaDuplex
 {
   TPeriph  Periph;
 	TChannel RxChannel;
 	TChannel TxChannel;
+};
+
+struct TDmaAdc
+{
+  TPeriph  Periph;
+  TChannel Ch;
 };
 
 #endif //__DMA_TYPES_H

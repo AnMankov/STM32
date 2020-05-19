@@ -59,3 +59,4 @@
 .\objects\lev_gauge_to_pc.o: .\Source\RTOS\inc\timers.h
 .\objects\lev_gauge_to_pc.o: .\Source\Ext_Dev\inc\Led.h
 .\objects\lev_gauge_to_pc.o: .\Source\Ext_Dev\inc\AD8402.h
+.\objects\lev_gauge_to_pc.o: .\Source\MCU_Drivers\inc\dma_types.h

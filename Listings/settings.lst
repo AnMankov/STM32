@@ -76173,6 +76173,7 @@ N//extern SemaphoreHandle_t RxSPI1_RdySem;        //данные приняты 
 Nextern SemaphoreHandle_t WrFlash;              //команда на запись данных во Flash
 Nextern SemaphoreHandle_t BtnTimer_TrigSem;     //
 Nextern SemaphoreHandle_t LedTimer_TrigSem;     //
+Nextern SemaphoreHandle_t DmaAdcMeas_CompSem;   //DMA завершил передачу данных из АЦП в память
 N
 N//семафоры обработки измерений МЭМС
 N//extern SemaphoreHandle_t MemsDevRdySem;        //МЭМС готов измерять

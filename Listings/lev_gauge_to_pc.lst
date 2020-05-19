@@ -76274,6 +76274,7 @@ N//extern SemaphoreHandle_t RxSPI1_RdySem;        //данные приняты 
 Nextern SemaphoreHandle_t WrFlash;              //команда на запись данных во Flash
 Nextern SemaphoreHandle_t BtnTimer_TrigSem;     //
 Nextern SemaphoreHandle_t LedTimer_TrigSem;     //
+Nextern SemaphoreHandle_t DmaAdcMeas_CompSem;   //DMA завершил передачу данных из АЦП в память
 N
 N//семафоры обработки измерений МЭМС
 N//extern SemaphoreHandle_t MemsDevRdySem;        //МЭМС готов измерять
@@ -76583,10 +76584,13 @@ N  void tx_adc( TExchngToPC::TParamHandle *ParamHandle );
 N  void tx_cmp_capture( TExchngToPC::TParamHandle *ParamHandle );
 N  void tx_diff_capture( TExchngToPC::TParamHandle *ParamHandle );
 N  
-N  void tmr_freg_init();
-N  void tmr_cmp_init();
-N  void tmr_diff_init();
-N  void adc_init();
+N  void init_tmr_freg();
+N  void init_tmr_cmp();
+N  void init_tmr_diff();
+N  void init_adc();
+N  void init_dma();
+N  void en_dma_with_adc( uint16_t );
+N  void dis_dma_with_adc();
 N  void init_diff_exti(  uint32_t Trigger );
 N  void deinit_diff_exti();
 N  void adc_cal();
@@ -76760,13 +76764,71 @@ N
 N#endif //__AD8402_H
 N
 L 8 "Source\Tasks\src\lev_gauge_to_pc.cpp" 2
+N#include "dma_types.h"
+L 1 ".\Source\MCU_Drivers\inc\dma_types.h" 1
+N#ifndef __DMA_TYPES_H
+N#define __DMA_TYPES_H
+N
+N#include "lib.h"
+N
+Nstruct TChannelSets
+N{
+N  uint32_t PeriphAddr;
+N  uint32_t MemAddr;
+N  uint32_t Direction;
+N  uint32_t Mode;
+N  uint32_t NbData;
+N};
+N
+Nstruct TChannel
+N{
+N  uint32_t  Nbr;
+N  IRQn_Type IRQ;
+N};
+N
+Ntypedef void ( *TFnct )( uint32_t );
+Ntypedef void ( *TClrFlagFnct )( DMA_TypeDef * );
+N
+Nstruct TPeriph
+N{
+N  DMA_TypeDef *Nbr;
+N  TFnct en_clk;
+N  uint32_t ClkMask;
+N  TClrFlagFnct clr_flag_tc_fnct;
+N};
+N
+Nstruct TEof
+N{
+N  DMA_TypeDef *DMA;
+N  uint32_t     TxChannel;
+N  bool         Flag;
+N};
+N
+Nstruct TDmaDuplex
+N{
+N  TPeriph  Periph;
+N	TChannel RxChannel;
+N	TChannel TxChannel;
+N};
+N
+Nstruct TDmaAdc
+N{
+N  TPeriph  Periph;
+N  TChannel Ch;
+N};
+N
+N#endif //__DMA_TYPES_H
+L 9 "Source\Tasks\src\lev_gauge_to_pc.cpp" 2
 N
 Nstatic BaseType_t TmrHigherPriorityTaskWoken;
 Nstatic BaseType_t Int1HigherPriorityTaskWoken;
+Nstatic BaseType_t DmaAdcHigherPriorityTaskWoken;
+N
 Nfloat TmpParam;
 Nbool UIF = false;
 N
 Nconstexpr uint16_t TX_SIZE = 30000U;
+N//constexpr uint16_t TX_SIZE = 30U;
 Nuint8_t Data[ TX_SIZE ];
 Nuint16_t nCapDiff = 0U;              //текущее количество захваченных значений
 N
@@ -76794,6 +76856,20 @@ N  { PC_CMD::START_ADC,       0.f,  {     1.f, 30000.f }, { (uint8_t *)Data,    
 N  { PC_CMD::CMP_CAPTURE,     0.f,  { FLT_MIN, FLT_MAX }, { (uint8_t *)&ExchngToPC.Tx_Test,         sizeof(ExchngToPC.Tx_Test)         } }, //CMP_CAPTURE
 X  { PC_CMD::CMP_CAPTURE,     0.f,  { 1.175494351e-38F, 3.40282347e+38F }, { (uint8_t *)&ExchngToPC.Tx_Test,         sizeof(ExchngToPC.Tx_Test)         } }, 
 N  { PC_CMD::DIFF_CAPTURE,    0.f,  {     1.f, 65536.f }, { (uint8_t *)&ExchngToPC.Tx_Test,         sizeof(ExchngToPC.Tx_Test)         } }, //DIFF_CAPTURE
+N};
+N
+Nconst TDmaAdc DmaAdc =
+N{
+N  { 
+N   DMA1,
+X   ((DMA_TypeDef *) (((0x40000000UL) + 0x00020000UL))),
+N   LL_AHB1_GRP1_EnableClock,
+N   LL_AHB1_GRP1_PERIPH_DMA1,
+X   (0x1UL << (0U)),
+N   LL_DMA_ClearFlag_TC1
+N  },
+N  { LL_DMA_CHANNEL_1, DMA1_Channel1_IRQn },                       //RxChannel
+X  { 0x00000001U, DMA1_Channel1_IRQn },                       
 N};
 N
 N//----- Реализация класса TExchngToPC -----------------------------------------------------
@@ -76886,7 +76962,7 @@ N    TPwm Pwm = cnt_pwm();
 N    set_pwm( Pwm );       //для сохранения максимальной разрядности необходимо модифицировать все параметры таймера \                            
 N}
 N
-Nvoid TExchngToPC::tmr_freg_init()
+Nvoid TExchngToPC::init_tmr_freg()
 N{
 N  TmrFreg.Pin.en_clk( TmrFreg.Pin.ClkPortMask );   //тактирование GPIO, к которому подключен выход таймера
 N  TmrFreg.Clk.en_periph( TmrFreg.Clk.PeriphMask ); //тактирование таймера
@@ -76986,7 +77062,7 @@ N  LL_TIM_EnableCounter( TmrFreg.Nbr );
 N  LL_TIM_EnableAllOutputs( TmrFreg.Nbr );
 N}
 N
-Nvoid TExchngToPC::tmr_cmp_init()
+Nvoid TExchngToPC::init_tmr_cmp()
 N{
 N  TmrCmp.Pin.en_clk   ( TmrCmp.Pin.ClkPortMask );       //тактирование GPIO, к которому подключен выход таймера
 N  TmrCmp.Clk.en_periph( TmrCmp.Clk.PeriphMask );        //тактирование таймера
@@ -77065,7 +77141,7 @@ N//  LL_TIM_EnableCounter( TmrCmp.Nbr );
 N//  LL_TIM_EnableAllOutputs( TmrCmp.Nbr );
 N}
 N
-Nvoid TExchngToPC::tmr_diff_init()
+Nvoid TExchngToPC::init_tmr_diff()
 N{
 N  TmrDiff.Pin.en_clk   ( TmrDiff.Pin.ClkPortMask );       //тактирование GPIO, к которому подключен выход таймера
 N  TmrDiff.Clk.en_periph( TmrDiff.Clk.PeriphMask );        //тактирование таймера
@@ -77148,7 +77224,7 @@ N    LL_TIM_SetPrescaler( TmrDiff.Nbr, Divider - 1U );
 N  }  
 N}
 N
-Nvoid TExchngToPC::adc_init()
+Nvoid TExchngToPC::init_adc()
 N{                                                                        
 N  Adc.Pin.en_clk( Adc.Pin.ClkPortMask );                                //тактирование GPIO, к которому подключен вход АЦП
 N  Adc.Clk.en_periph( Adc.Clk.PeriphMask );                              //тактирование АЦП
@@ -77170,6 +77246,120 @@ N  LL_ADC_SetChannelSingleDiff( Adc.Nbr, Adc.Ch, LL_ADC_SINGLE_ENDED );  //ко�
 X  LL_ADC_SetChannelSingleDiff( Adc.Nbr, Adc.Ch, ( (0x7FUL << (0U))) );  
 N    
 N  adc_cal();
+N  
+N  LL_ADC_REG_SetDMATransfer( Adc.Nbr, LL_ADC_REG_DMA_TRANSFER_LIMITED );
+X  LL_ADC_REG_SetDMATransfer( Adc.Nbr, ( (0x1UL << (0U))) );
+N}
+N
+Nvoid TExchngToPC::init_dma()
+N{
+N//  const TDmaAdc DmaAdc =
+N//  {
+N//    { 
+N//     DMA1,
+N//     LL_AHB1_GRP1_EnableClock,
+N//     LL_AHB1_GRP1_PERIPH_DMA1,
+N//     LL_DMA_ClearFlag_TC1
+N//    },
+N//    { LL_DMA_CHANNEL_1, DMA1_Channel1_IRQn },                       //RxChannel
+N//  };
+N
+N//  struct TChannelSets
+N//  {
+N//    uint32_t PeriphAddr;
+N//    uint32_t MemAddr;
+N//    uint32_t Direction;
+N//    uint32_t Mode;
+N//    uint32_t NbData;
+N//  };
+N
+N//struct TChannelSets
+N//{
+N//  uint32_t PeriphAddr;
+N//  uint32_t MemAddr;
+N//  uint32_t Direction;
+N//  uint32_t Mode;
+N//  uint32_t NbData;
+N//};
+N  TChannelSets AdcCh =
+N  {
+N    ( uint32_t )&Adc.Nbr->DR,
+N    (uint32_t)Data,
+N    LL_DMA_DIRECTION_PERIPH_TO_MEMORY,
+X    0x00000000U,
+N    LL_DMA_MODE_NORMAL,
+X    0x00000000U,
+N    TX_SIZE,
+N  };
+N  
+N  DmaAdc.Periph.en_clk( DmaAdc.Periph.ClkMask );
+N  
+N  LL_DMA_InitTypeDef DMA_Init;
+N  
+N	DMA_Init.PeriphOrM2MSrcAddress  = AdcCh.PeriphAddr;          //базовый адрес источника
+N	DMA_Init.MemoryOrM2MDstAddress  = AdcCh.MemAddr;             //базовый адрес места назначения
+N	DMA_Init.Direction              = AdcCh.Direction;           //направление трансфера
+N	DMA_Init.Mode                   = AdcCh.Mode;                //режим работы DMA (нормальный или кольцевой)
+N	DMA_Init.PeriphOrM2MSrcIncMode  = LL_DMA_PERIPH_NOINCREMENT; //инкремент блоков источника данных (периферии или ОЗУ)
+X	DMA_Init.PeriphOrM2MSrcIncMode  = 0x00000000U; 
+N	DMA_Init.MemoryOrM2MDstIncMode  = LL_DMA_MEMORY_INCREMENT;   //инкремент блоков места назначения данных (периферии или ОЗУ)
+X	DMA_Init.MemoryOrM2MDstIncMode  = (0x1UL << (7U));   
+N	DMA_Init.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_BYTE;    //выравнивание данных источника данных (периферии или ОЗУ)
+X	DMA_Init.PeriphOrM2MSrcDataSize = 0x00000000U;    
+N	DMA_Init.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_BYTE;    //выравнивание данных места назначения данных (периферии или ОЗУ)
+X	DMA_Init.MemoryOrM2MDstDataSize = 0x00000000U;    
+N	DMA_Init.NbData                 = AdcCh.NbData;              //количество блоков данных для обмена - перезаписывается под актуальный буфер
+N	DMA_Init.PeriphRequest          = LL_DMA_REQUEST_0;          //запрос периферии
+X	DMA_Init.PeriphRequest          = 0x00000000U;          
+N	DMA_Init.Priority               = LL_DMA_PRIORITY_VERYHIGH;  //приоритет DMA канала
+X	DMA_Init.Priority               = (0x3UL << (12U));  
+N  
+N  do { } while ( 
+N                LL_DMA_Init(
+N                            DmaAdc.Periph.Nbr,
+N                            DmaAdc.Ch.Nbr,
+N                            &DMA_Init
+N                           ) != SUCCESS           
+N               );
+N
+N  //настройка NVIC
+N  NVIC_SetPriority( 
+N                   DmaAdc.Ch.IRQ, 
+N                   NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 5, 0) 
+N                  );                                                     //5 - максимальный уровень приоритета для прерывания \
+N                                                                           из которого можно вызывать API функции FreeRTOS 
+X                  );                                                     
+N  NVIC_EnableIRQ( DmaAdc.Ch.IRQ );                                       //прерывания при считывании данных ADC
+N  
+N    
+N}
+N
+Nvoid TExchngToPC::en_dma_with_adc( uint16_t DataQty )
+N{
+N	LL_DMA_SetDataLength(
+N                       DmaAdc.Periph.Nbr,
+N                       DmaAdc.Ch.Nbr,
+N                       DataQty
+N                      );  
+N  LL_DMA_EnableIT_TC(
+N                     DmaAdc.Periph.Nbr, 
+N                     DmaAdc.Ch.Nbr 
+N                    );                                                   //Transfer complete interrupt
+N
+N  LL_USART_EnableDMAReq_RX( HW.If );                                     //включение DMA режима для приема через USART
+N  LL_DMA_EnableChannel( DmaAdc.Periph.Nbr, DmaAdc.Ch.Nbr );              //активация DMA канала \
+N                                                                           канал включен => канал контроллера DMA может \
+N                                                                           обработать запрос от периферии, \
+N	                                                                         подключенной к этому каналу
+X  LL_DMA_EnableChannel( DmaAdc.Periph.Nbr, DmaAdc.Ch.Nbr );              
+N}
+N
+Nvoid TExchngToPC::dis_dma_with_adc()
+N{
+N	LL_DMA_DisableIT_TC(
+N                      DmaAdc.Periph.Nbr, 
+N                      DmaAdc.Ch.Nbr 
+N                     );                                                  //Transfer complete interrupt
 N}
 N
 Nvoid TExchngToPC::adc_cal()
@@ -77314,7 +77504,10 @@ N
 Nvoid TExchngToPC::rx_start_adc( TExchngToPC::TParamHandle *ParamHandle )
 N{
 N  ParamHandle->RxVal = chk_range( ParamHandle->RxVal, ParamHandle->Range );
-N    
+N//  ParamHandle->RxVal = TX_SIZE;
+N
+N  uint16_t DataQty   = ParamHandle->RxVal;
+N  
 N    UCG1.off(); //на время оцифровки пробросить сигнал с генератора
 N    
 N    init_diff_exti( Adc.Exti.Trigger );                                         //инициализация вывода DIFF, предназначенного для запуска преобразования АЦП
@@ -77324,7 +77517,7 @@ N      deinit_diff_exti();
 N    
 N    //оцифровка до получения количества выборок == принятому значению в параметре
 N    en_adc();
-N    
+N    en_dma_with_adc( DataQty );
 N    /*
 N    *  Биты управления кроме DIFSEL, ADCAL, ADEN можно записывать только если АЦП включен
 N    */
@@ -77358,6 +77551,9 @@ N
 N    //I/O analog switches voltage booster - описание того что делать когда Vdda становится слишком низким
 N    LL_ADC_REG_SetOverrun( Adc.Nbr, LL_ADC_REG_OVR_DATA_OVERWRITTEN );
 X    LL_ADC_REG_SetOverrun( Adc.Nbr, ((0x1UL << (12U))) );
+N    
+N    
+N    
 N    LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, LL_ADC_SAMPLINGTIME_2CYCLES_5 ); //установка времени выборки канала. \
 N                                                                                       во время выборки биты выбора канала не должны изменяться
 X    LL_ADC_SetChannelSamplingTime( Adc.Nbr, Adc.Ch, (0x00000000U) ); 
@@ -77375,16 +77571,20 @@ N    LL_ADC_REG_StartConversion( Adc.Nbr );                               //за
 N                                                                           т.к. был выбран программный триггер, то преобразование запускается немедленно
 X    LL_ADC_REG_StartConversion( Adc.Nbr );                               
 N    
-N    for ( uint16_t Ctr = 0U; Ctr < ParamHandle->RxVal ; ++Ctr )
-N    {
-N      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
-N      
-N      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
-N//      Data[ Ctr ] = ( Ctr % 2 ) ? 77
-N//                                : 55;
-N      
-N//      LL_ADC_ClearFlag_EOC( Adc.Nbr );
-N    }
+N    
+N    xSemaphoreTake( DmaAdcMeas_CompSem, portMAX_DELAY );                 //ожидание завершения работы DMA с ADC
+X    xQueueGenericReceive( ( QueueHandle_t ) ( DmaAdcMeas_CompSem ), 0, ( ( TickType_t ) 0xffffffffUL ), ( ( BaseType_t ) 0 ) );                 
+N    
+N//    for ( uint16_t Ctr = 0U; Ctr < DataQty ; ++Ctr )
+N//    {
+N//      do {} while ( LL_ADC_IsActiveFlag_EOC( Adc.Nbr ) == false );
+N//      
+N//      Data[ Ctr ] = LL_ADC_REG_ReadConversionData8( Adc.Nbr );
+N////      Data[ Ctr ] = ( Ctr % 2 ) ? 77
+N////                                : 55;
+N//      
+N////      LL_ADC_ClearFlag_EOC( Adc.Nbr );
+N//    }
 N    
 N    //устанавливается бит ADSTP => продолжающееся регулярное преобразование обрывается с частичной потерей результата. \
 N      по завершении процедуры биты ADSTP/ADSTART (для регулярного преобразования) сбрасываются аппаратно и программа \
@@ -77393,9 +77593,9 @@ X
 N    LL_ADC_REG_StopConversion( Adc.Nbr ); 
 N    do {} while ( LL_ADC_REG_IsStopConversionOngoing( Adc.Nbr ) == true ); //опрос ADSTP
 N    do {} while ( LL_ADC_REG_IsConversionOngoing( Adc.Nbr ) == true );     //опрос ADSTART
-N    
-N    
-N    dis_adc();    
+N        
+N    dis_adc();
+N    dis_dma_with_adc();    
 N    
 N    UCG1.on();
 N}
@@ -77435,8 +77635,8 @@ N    deinit_diff_exti();
 N    UCG1.on();
 N    
 N    ParamHandle->RxVal = nCap * 4U;
-W "Source\Tasks\src\lev_gauge_to_pc.cpp" 601 22 variable "MAX_N_CAP"  was declared but never referenced
-W "Source\Tasks\src\lev_gauge_to_pc.cpp" 610 15 variable "pTmrCmp"  was declared but never referenced
+W "Source\Tasks\src\lev_gauge_to_pc.cpp" 728 22 variable "MAX_N_CAP"  was declared but never referenced
+W "Source\Tasks\src\lev_gauge_to_pc.cpp" 737 15 variable "pTmrCmp"  was declared but never referenced
 N}
 N
 Nvoid TExchngToPC::rx_diff_capture( TExchngToPC::TParamHandle *ParamHandle )
@@ -77679,13 +77879,16 @@ N  AD8402.init();
 N  ExchngToPC.pin_clk_config();
 N  ExchngToPC.hw_init();
 N  
-N  ExchngToPC.tmr_freg_init();
-N  ExchngToPC.tmr_cmp_init();
-N  ExchngToPC.tmr_diff_init();
-N  ExchngToPC.adc_init();
+N  ExchngToPC.init_tmr_freg();
+N  ExchngToPC.init_tmr_cmp();
+N  ExchngToPC.init_tmr_diff();
+N  ExchngToPC.init_adc();
+N  ExchngToPC.init_dma();
 N   
 N  for ( ;; )
-N  {
+N  {  
+N//    ExchngToPC.rx_start_adc( &ParamHandle[ PC_CMD::START_ADC ] );
+N   
 N    ExchngToPC.parse_pkt();                                   //ожидание валидного пакета
 N    for ( auto &item : CmdHandler )
 N    {
@@ -77704,7 +77907,7 @@ N
 N        break;
 N      }
 N    };
-N      
+N    
 N   //если команда в принятом пакете не была найдена, то ответ не отправляется
 N    
 N//    vTaskDelay( pdMS_TO_TICKS( 2U ) );
@@ -77755,25 +77958,49 @@ N  if ( LL_EXTI_IsActiveFlag_0_31( ExchngToPC.Adc.Exti.Line ) )
 N  {
 N    LL_EXTI_ClearFlag_0_31( ExchngToPC.Adc.Exti.Line  );
 N	 
-N	 Int1HigherPriorityTaskWoken = pdFALSE;
-X	 Int1HigherPriorityTaskWoken = ( ( BaseType_t ) 0 );
-N//   RelFour.on();
-N	 if ( xSemaphoreGiveFromISR( DiffExti_TrigSem, &Int1HigherPriorityTaskWoken ) == pdFAIL ) //отправить семафор окончания записи
-X	 if ( xQueueGiveFromISR( ( QueueHandle_t ) ( DiffExti_TrigSem ), ( &Int1HigherPriorityTaskWoken ) ) == ( ( ( BaseType_t ) 0 ) ) ) 
+N	  Int1HigherPriorityTaskWoken = pdFALSE;
+X	  Int1HigherPriorityTaskWoken = ( ( BaseType_t ) 0 );
+N//    RelFour.on();
+N	  if ( xSemaphoreGiveFromISR( DiffExti_TrigSem, &Int1HigherPriorityTaskWoken ) == pdFAIL ) //отправить семафор окончания записи
+X	  if ( xQueueGiveFromISR( ( QueueHandle_t ) ( DiffExti_TrigSem ), ( &Int1HigherPriorityTaskWoken ) ) == ( ( ( BaseType_t ) 0 ) ) ) 
 N    {
 N      //семафор уже был доступен, т.е. ранее отдан другой задачей или прерыванием
-N//   RelFour.toggle();
-N      
+N      //RelFour.toggle();      
 N    }  
-N	 if ( Int1HigherPriorityTaskWoken == pdTRUE )
-X	 if ( Int1HigherPriorityTaskWoken == ( ( BaseType_t ) 1 ) )
-N	 {
-N   
-N      portYIELD_FROM_ISR( Int1HigherPriorityTaskWoken ); //принудительное переключение контекста для разблокировки задачи - обработчика
-X      if( Int1HigherPriorityTaskWoken != ( ( BaseType_t ) 0 ) ) { ( * ( ( volatile uint32_t * ) 0xe000ed04 ) ) = ( 1UL << 28UL ); __dsb( ( 15 ) ); __isb( ( 15 ) ); }; 
-N	                                                       //максимально быстро перейти к считыванию данных с датчиков микросхемы MPU-9250
-N	                                                       //для FreeRTOS время от выдачи семафора до перехода к задаче на stm32f3 - 7мкс
-N	 }	 
+N	  if ( Int1HigherPriorityTaskWoken == pdTRUE )
+X	  if ( Int1HigherPriorityTaskWoken == ( ( BaseType_t ) 1 ) )
+N	  {
+N    
+N       portYIELD_FROM_ISR( Int1HigherPriorityTaskWoken ); //принудительное переключение контекста для разблокировки задачи - обработчика
+X       if( Int1HigherPriorityTaskWoken != ( ( BaseType_t ) 0 ) ) { ( * ( ( volatile uint32_t * ) 0xe000ed04 ) ) = ( 1UL << 28UL ); __dsb( ( 15 ) ); __isb( ( 15 ) ); }; 
+N	  }
 N  }
 N//  Do.open();
+N}
+N
+Nextern "C" void DMA1_Channel1_IRQHandler(void)
+N{
+N  if ( LL_DMA_IsActiveFlag_TC1( DMA1 ) )             //проверка флага transfer complete
+X  if ( LL_DMA_IsActiveFlag_TC1( ((DMA_TypeDef *) (((0x40000000UL) + 0x00020000UL))) ) )             
+N  {
+N    LL_DMA_ClearFlag_TC1( DMA1 );
+X    LL_DMA_ClearFlag_TC1( ((DMA_TypeDef *) (((0x40000000UL) + 0x00020000UL))) );
+N    LL_DMA_DisableChannel( DMA1, LL_DMA_CHANNEL_1 );
+X    LL_DMA_DisableChannel( ((DMA_TypeDef *) (((0x40000000UL) + 0x00020000UL))), 0x00000001U );
+N
+N	  DmaAdcHigherPriorityTaskWoken = pdFALSE;
+X	  DmaAdcHigherPriorityTaskWoken = ( ( BaseType_t ) 0 );
+N	  if ( xSemaphoreGiveFromISR( DmaAdcMeas_CompSem, &DmaAdcHigherPriorityTaskWoken ) == pdFAIL ) //отправить семафор окончания записи
+X	  if ( xQueueGiveFromISR( ( QueueHandle_t ) ( DmaAdcMeas_CompSem ), ( &DmaAdcHigherPriorityTaskWoken ) ) == ( ( ( BaseType_t ) 0 ) ) ) 
+N    {
+N      //семафор уже был доступен, т.е. ранее отдан другой задачей или прерыванием
+N      //RelFour.toggle();      
+N    }  
+N	  if ( DmaAdcHigherPriorityTaskWoken == pdTRUE )
+X	  if ( DmaAdcHigherPriorityTaskWoken == ( ( BaseType_t ) 1 ) )
+N	  {   
+N      portYIELD_FROM_ISR( DmaAdcHigherPriorityTaskWoken ); //принудительное переключение контекста для разблокировки задачи - обработчика
+X      if( DmaAdcHigherPriorityTaskWoken != ( ( BaseType_t ) 0 ) ) { ( * ( ( volatile uint32_t * ) 0xe000ed04 ) ) = ( 1UL << 28UL ); __dsb( ( 15 ) ); __isb( ( 15 ) ); }; 
+N	  }
+N  }
 N}

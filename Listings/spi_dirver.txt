@@ -558,7 +558,7 @@
 ;;;142      struct TSpiDma
 ;;;143      {
 ;;;144        SPI_TypeDef *If;
-;;;145        TDma         Dma;
+;;;145        TDmaDuplex   Dma;
 ;;;146      };
 ;;;147      
 ;;;148      TSpiDma SpiDma[] =

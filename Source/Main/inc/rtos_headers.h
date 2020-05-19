@@ -46,6 +46,7 @@ extern SemaphoreHandle_t PdSem;                //тестовый периоди
 extern SemaphoreHandle_t WrFlash;              //команда на запись данных во Flash
 extern SemaphoreHandle_t BtnTimer_TrigSem;     //
 extern SemaphoreHandle_t LedTimer_TrigSem;     //
+extern SemaphoreHandle_t DmaAdcMeas_CompSem;   //DMA завершил передачу данных из АЦП в память
 
 //семафоры обработки измерений МЭМС
 //extern SemaphoreHandle_t MemsDevRdySem;        //МЭМС готов измерять

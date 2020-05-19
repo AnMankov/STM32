@@ -113,6 +113,7 @@ SemaphoreHandle_t PdSem;                //тестовый периодичес�
 SemaphoreHandle_t WrFlash;              //команда на запись данных во Flash
 SemaphoreHandle_t BtnTimer_TrigSem;     //
 SemaphoreHandle_t LedTimer_TrigSem;     //
+SemaphoreHandle_t DmaAdcMeas_CompSem;   //
 
 SemaphoreHandle_t Tmr_TrigSem;
 SemaphoreHandle_t DiffExti_TrigSem;
@@ -211,6 +212,7 @@ static void create_semphrs()
   
   check_create_semphr( Tmr_TrigSem             = xSemaphoreCreateBinary() );
   check_create_semphr( DiffExti_TrigSem        = xSemaphoreCreateBinary() );
+  check_create_semphr( DmaAdcMeas_CompSem      = xSemaphoreCreateBinary() );  
 }
 
 static void create_mutexes()

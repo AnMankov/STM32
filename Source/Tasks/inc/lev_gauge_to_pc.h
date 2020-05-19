@@ -73,10 +73,13 @@ public:
   void tx_cmp_capture( TExchngToPC::TParamHandle *ParamHandle );
   void tx_diff_capture( TExchngToPC::TParamHandle *ParamHandle );
   
-  void tmr_freg_init();
-  void tmr_cmp_init();
-  void tmr_diff_init();
-  void adc_init();
+  void init_tmr_freg();
+  void init_tmr_cmp();
+  void init_tmr_diff();
+  void init_adc();
+  void init_dma();
+  void en_dma_with_adc( uint16_t );
+  void dis_dma_with_adc();
   void init_diff_exti(  uint32_t Trigger );
   void deinit_diff_exti();
   void adc_cal();

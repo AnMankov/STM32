@@ -142,7 +142,7 @@ void TSPI::dma_init()
   struct TSpiDma
   {
     SPI_TypeDef *If;
-    TDma         Dma;
+    TDmaDuplex   Dma;
   };
   
   TSpiDma SpiDma[] =
